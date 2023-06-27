@@ -1,0 +1,361 @@
+---
+title: "Cleaning + Data Creation"
+format: html
+editor: visual
+---
+
+```{r}
+# Loading Libraries
+library(tidyverse)
+library(readxl)
+library(openxlsx)
+library(janitor)
+library(rvest)
+library(zoo)
+library(tidygeocoder)
+```
+
+```{r, warning = False}
+# Importing Data
+killing_data <- read_excel("original_data/JL_killed_raw_06092023.xlsx")
+
+census_data_race <- read_csv("original_data/DECENNIALPL2020.P1-2023-06-15T230508.csv")
+
+#pd_locations <- read_excel("/Users/eappelson/Desktop/ACLU LA WORK/CRIMINAL JUSTICE/Justice Lab/Data/Killing/Adjusted Data/Police_Department_Locations.xlsx")
+```
+
+Cleaning Killing Data
+```{r}
+# Renaming columns
+names(killing_data) <- gsub(" ", "_", gsub("'","", gsub("?","", colnames(killing_data)))) %>% tolower
+
+# Filtering to just Louisiana
+LA_killing <- killing_data %>% filter(., state == "LA")
+
+# Removing Parish from county name
+LA_killing$county <- gsub(" Parish", "", LA_killing$county)
+
+# Fixing race variable, creating year variable, creating year-month variable
+LA_killing <- LA_killing %>% mutate(., victims_race = ifelse(victims_race == "Unknown race", "Unknown Race",victims_race), year = substr(`date_of_incident_(month/day/year)`,1,4), year_month = as.yearqtr(LA_killing$`date_of_incident_(month/day/year)`, format = "%Y-%m-%d"))
+
+# Creating age categorical variable
+LA_killing <- LA_killing %>% 
+  mutate(age_category = case_when(
+    victims_age < 18 ~ "<18",
+    victims_age >= 18 & victims_age < 35 ~ "18 - 34",
+    victims_age >= 35 & victims_age < 55 ~ "35-54",
+    victims_age >= 55 ~ "55+"
+  ))
+```
+
+Cleaning Census Data
+```{r}
+# Transforming census data
+census_data <- rownames_to_column(as.data.frame(t(census_data_race)), "county")
+
+# Removing text from Parish names
+census_data$county <- gsub(' Parish, Louisiana', '',census_data$county)
+
+# Renaming data
+names(census_data) <- census_data[1,]
+census_data <- census_data[-1,]
+
+# Fixing up column names
+names(census_data) <- gsub(" ", "_", gsub("'","", gsub("?","", colnames(census_data)))) %>% tolower
+census_data <- clean_names(census_data)
+
+# Finding all columns that include black population
+black_columns <- grep("black", names(census_data), value = TRUE)
+colSums(census_data[, black_columns])
+
+# Turning those columns into numeric variables
+census_data <- census_data %>% mutate_at(black_columns, as.numeric)
+
+# Summing those columns to make total black and total white population and fixing spelling problem
+census_data <- census_data %>% mutate(total_black = rowSums(census_data[,black_columns]), total_white = as.numeric(white_alone), county = ifelse(county == "St. John the Baptist", "St. John The Baptist", county))
+
+names(census_data)[names(census_data) == 'label_grouping'] <- 'county'
+```
+
+Top Map Data
+```{r}
+# Number of killings per county
+kill_per_county <- LA_killing %>% 
+  group_by(county) %>% 
+  summarize(value = n())
+
+# Writing to CSV
+write.csv(kill_per_county, "infogram_data/people_killed_per_county.csv")
+```
+
+Death Description Data
+```{r}
+# Subsetting the LA data
+description_data <- LA_killing[,c("victims_name", "county", "victims_age", "a_brief_description_of_the_circumstances_surrounding_the_death")]
+
+# Renaming variables
+names(description_data) <- c("name", "county", "age", "description")
+
+# Creating a new column for name with age
+description_data$name_age <- str_c(description_data$name, ", ", description_data$age)
+
+# Subsetting columns again
+description_data <- description_data[,c("county","name_age","description")]
+description_data
+
+write.csv(description_data, "infogram_data/description.csv")
+```
+
+Demographic Breakdown Graphic
+```{r}
+# Group by race
+demographic_race <- demographic_data %>% 
+  group_by(victims_race) %>%
+  summarize(count = n())
+
+# Group by gender 
+demographic_gender <- demographic_data %>% 
+  group_by(victims_gender) %>%
+  summarize(count = n())
+
+# Group by age category
+demographic_age <- demographic_data %>%
+  group_by(age_category) %>%
+  summarize(count = n())
+
+# Writing to CSV
+write.csv(demographic_race, "infogram_data/demographic_data_race.csv")
+write.csv(demographic_gender, "infogram_data/demographic_data_gender.csv")
+write.csv(demographic_age, "infogram_data/demographic_data_age.csv")
+```
+
+Number of Killing Per Hundred Thousand Map
+```{r}
+# Counting black people killed per hundred thousand black population
+per_huntho_black <- LA_killing %>%
+  filter(victims_race == "Black") %>%
+  group_by(county) %>%
+  summarize(count_black = n()) %>%
+  merge(., census_data, by = "county") %>%
+  mutate(black_killed_per_huntho = 100000*count_black/total_black)
+
+# Counting white people killed per hundred thousand white population
+per_huntho_white <- LA_killing %>%
+  filter(victims_race == "White") %>%
+  group_by(county) %>%
+  summarize(count_white = n()) %>%
+  merge(., census_data, by = "county") %>%
+  mutate(white_killed_per_huntho = 100000*count_white/total_white)
+
+
+# Counting ratio black to white killed given population
+black_white_kill_ratio <- merge(per_huntho_black,per_huntho_white, by = "county") %>%
+  mutate(ratio_bw = black_killed_per_huntho/white_killed_per_huntho)
+
+# Writing to CSV
+write.csv(per_huntho_black, "infogram_data/per_hundred_thousand_black.csv")
+write.csv(per_huntho_white, "infogram_data/per_hundred_thousand_white.csv")
+write.csv(black_white_kill_ratio, "infogram_data/ratio.csv")
+```
+
+County Racial Demographics from Killings
+```{r}
+# Breakdown for race
+county_race_breakdown <- LA_killing %>%
+  group_by(county) %>% 
+  summarize(black = sum(victims_race == "Black"),
+            white = sum(victims_race == "White"),
+            hispanic = sum(victims_race == "Hispanic"),
+            asian = sum(victims_race == "Asian"),
+            unknown = sum(victims_race == "Unknown Race"))
+
+# Breakdown for gender
+county_gender_breakdown <- LA_killing %>% 
+  group_by(county) %>%
+  summarize(male = sum(victims_gender == "Male"),
+            female = sum(victims_gender == "Female"),
+            unknown = sum(victims_gender == "Unknown"))
+
+# Breakdown for age
+county_age_breakdown <- LA_killing %>% 
+  group_by(county) %>% 
+  summarize(less_18 = sum(age_category == "<18"),
+            bet_18_34 = sum(age_category == "18 - 34"),
+            bet_35_54 = sum(age_category == "35-54"),
+            grt_55 = sum(age_category == "55+"))
+
+# Writing to CSV
+write.csv(county_race_breakdown, "infogram_data/county_race_breakdown.csv")
+write.csv(county_gender_breakdown, "infogram_data/county_gender_breakdown.csv")
+write.csv(county_age_breakdown, "infogram_data/county_age_breakdown.csv")
+```
+
+Armed Status Barchart
+```{r}
+# Armed status by race 
+armed_by_race <- LA_killing %>% 
+  group_by(`armed/unarmed_status`) %>%
+  summarize(total = n(),
+            black = sum(victims_race == "Black"),
+            white = sum(victims_race == "White"),
+            hispanic = sum(victims_race == "Hispanic"),
+            unknown = sum(victims_race == "Unknown"),
+            asian = sum(victims_race == "Asian"))
+
+# Writing to CSV
+write.csv(armed_by_race, "infogram_data/armed_by_race.csv")
+
+# Seeing what how many people out of this allegedly armed had guns
+filter(LA_killing, LA_killing$`armed/unarmed_status` == "Allegedly Armed" | LA_killing$`armed/unarmed_status` == "Allegedly armed") %>% 
+  group_by(filter(LA_killing, LA_killing$`armed/unarmed_status` == "Allegedly Armed" | LA_killing$`armed/unarmed_status` == "Allegedly armed")$`alleged_weapon_(source:_wapo_and_review_of_cases_not_included_in_wapo_database)`) %>%
+  summarize(count = n())
+
+# Number of people allegedly armed
+nrow(filter(LA_killing, LA_killing$`armed/unarmed_status` == "Allegedly Armed" | LA_killing$`armed/unarmed_status` == "Allegedly armed"))
+```
+
+Mental Health Pie chart
+```{r}
+# Counting mental health status groups 
+mental_health <- LA_killing %>% 
+  group_by(LA_killing$`symptoms_of_mental_illness?`) %>%
+  summarize(count = n())
+
+# Writing to CSV
+write.csv(mental_health, "infogram_data/mental_health.csv")
+```
+
+Police Department graph of most killings
+```{r}
+# Counting most to least number of killings by PD towards all people
+pd_kill_all <- LA_killing %>% 
+  mutate(departments = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
+  unnest(departments) %>%
+  group_by(departments) %>%
+  summarize(count = n())
+
+pd_kill_all <- pd_kill_all[order(-pd_kill_all$count),]
+
+
+# Counting most to least number of killings by PD towards black people
+pd_kill_black <- LA_killing %>% 
+  mutate(departments = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
+  filter(., victims_race == "Black") %>%
+  unnest(departments) %>%
+  group_by(departments) %>%
+  summarize(count = n())
+
+pd_kill_black <- pd_kill_black[order(-pd_kill_black$count),]
+
+# Counting most to least number of killings by PD towards white people
+pd_kill_white <- LA_killing %>% 
+  mutate(departments = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
+  filter(., victims_race == "White") %>%
+  unnest(departments) %>%
+  group_by(departments) %>%
+  summarize(count = n())
+
+pd_kill_white <- pd_kill_white[order(-pd_kill_white$count),]
+
+# Writing to CSV
+write.csv(pd_kill_all, "infogram_data/pd_kill_all.csv")
+write.csv(pd_kill_black, "infogram_data/pd_kill_black.csv")
+write.csv(pd_kill_white, "infogram_data/pd_kill_white.csv")
+```
+
+Moving timeline of killings per year by demographic
+```{r}
+# Killings per year by race
+killings_per_year_race <- LA_killing %>%
+  group_by(year) %>%
+  summarize(total = n(),
+            black = sum(victims_race == "Black"),
+            white = sum(victims_race == "White"),
+            hispanic = sum(victims_race == "Hispanic"),
+            unknown = sum(victims_race == "Unknown Race"),
+            asian = sum(victims_race == "Asian"))
+  
+# Per year by gender
+killings_per_year_gender <- LA_killing %>%
+  group_by(year) %>%
+  summarize(total = n(),
+            male = sum(victims_gender == "Male"),
+            female = sum(victims_gender == "Female"),
+            unknown = sum(victims_gender == "Unknown")
+  )
+
+
+# Per year by age
+killings_per_year_age <- LA_killing %>%
+  group_by(year) %>%
+  summarize(less_18 = sum(age_category == "<18"),
+            bet_18_34 = sum(age_category == "18 - 34"),
+            bet_35_54 = sum(age_category == "35-54"),
+            grt_55 = sum(age_category == "55+")
+  )
+
+
+# average age of people killed each year!
+ave_age_per_year <- LA_killing %>%
+  group_by(year) %>%
+  summarize(ave = mean(na.omit(as.integer(victims_age))))
+
+
+# Writing to CSV
+write.csv(killings_per_year_race, "infogram_data/killings_per_year_race.csv")
+write.csv(killings_per_year_gender, "infogram_data/killings_per_year_gender.csv")
+write.csv(killings_per_year_age, "infogram_data/killings_per_year_age.csv")
+write.csv(ave_age_per_year, "infogram_data/ave_age_per_year.csv")
+```
+
+Stacked barchart of Fleeing Status
+```{r}
+# Creating a ternary fleeing variable/dataframe
+fleeing_data <-LA_killing %>% mutate(fleeing = ifelse(is.na(`fleeing_(source:_wapo_and_review_of_cases_not_included_in_wapo_database)`), "Unclear", `fleeing_(source:_wapo_and_review_of_cases_not_included_in_wapo_database)`)) %>% 
+  mutate(year = as.integer(substr(`date_of_incident_(month/day/year)`,1,4))) %>% 
+  filter(year >= 2015) %>%
+  mutate(fleeing = ifelse((fleeing == "Unclear" | fleeing == "Not Fleeing"), fleeing, "Fleeing"))
+
+# Summarizing fleeing numbers by race
+killed_fleeing_by_race <- fleeing_data %>%
+  group_by(victims_race) %>%
+  summarize(flee = sum(fleeing == "Fleeing"),
+            notflee = sum(fleeing == "Not Fleeing"),
+            unclear = sum(fleeing == "Unclear"))
+
+write.csv(killed_fleeing_by_race, "infogram_data/killed_fleeing_by_race.csv")
+```
+
+Mapping where the crimes occurred
+```{r}
+# Selecting specific columns and creating lat_long variable
+crime_location <- LA_killing[,c("victims_gender", "victims_age", "victims_race", "date_of_incident_(month/day/year)", "agency_responsible_for_death", "latitude", "longitude")] %>%
+  mutate(latitude = trunc(latitude*10^4)/10^4, longitude = trunc(longitude*10^4)/10^4, lat_long = paste0(latitude, " ", longitude)) 
+
+write.csv(crime_location, "infogram_data/crime_location.csv")
+```
+
+Counting number of violent crimes vs. non-violent
+```{r}
+# Creating binary violent and nonviolent and counting how many of each
+violent_vs_nonviolent <- LA_killing %>% 
+  mutate(year = as.integer(substr(`date_of_incident_(month/day/year)`,1,4))) %>% 
+  filter(year >= 2017) %>%
+  mutate(crime_status = ifelse(`encounter_type_(draft)` == "Part 1 Violent Crime" | `encounter_type_(draft)` == "Part 1 Violent Crime/Domestic Disturbance", "Violent Crime", "Non-Violent Crime")) %>%
+  group_by(crime_status) %>%
+  summarize(count = n())
+
+write.csv(violent_vs_nonviolent,"infogram_data/violent_vs_nonviolent.csv")
+```
+
+
+Seeing how many people were charged
+```{r}
+# Counting charge by status
+charged_data <- LA_killing %>%
+  group_by(`criminal_charges?`) %>%
+  count()
+
+write.csv(charged_data, "infogram_data/charged_data.csv")
+```
+
