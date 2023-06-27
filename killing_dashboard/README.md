@@ -1,1 +1,1 @@
-Here is the link to the Dashboard, as well as a download of it via June 27th, 2023. Please use the link rather than the download
+This folder contains the link to the Dashboard, as well as a download of it via June 27th, 2023. Please use the link rather than the download
