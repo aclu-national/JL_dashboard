@@ -19,4 +19,3 @@ The dashboard can be found here (currently password protect, contact eappelson@l
 
 ```{html}
 <div class="infogram-embed" data-id="_/eXl9ubwz9F0MeGEwCZlL" data-type="interactive" data-title="Methodology"></div><script>!function(e,i,n,s){var t="InfogramEmbeds",d=e.getElementsByTagName("script")[0];if(window[t]&&window[t].initialized)window[t].process&&window[t].process();else if(!e.getElementById(n)){var o=e.createElement("script");o.async=1,o.id=n,o.src="https://e.infogram.com/js/dist/embed-loader-min.js",d.parentNode.insertBefore(o,d)}}(document,0,"infogram-async");</script>
-```
