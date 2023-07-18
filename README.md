@@ -14,4 +14,4 @@ Louisiana is experiencing an epidemic of police violence that disproportionately
 ## Product
 The dashboard can be found here (currently password protect, contact eappelson@laaclu.org for access): https://www.aclujusticelab.org/data-2/
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/[eappelson]/JL_dashboard/blob/snippet/'Screenshot 2023-07-18 at 12.40.37 PM.jpg'?raw=true)
