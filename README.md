@@ -1,4 +1,4 @@
-# JL_dashboard
+# JL_dashboarde
 Git for the Justice Lab dashboard. This git includes documentation for the project, the data, the scripts to clean the data, the cleaned data, and all other work associated with the project. 
 
 ## Description
