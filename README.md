@@ -12,6 +12,6 @@ Louisiana is experiencing an epidemic of police violence that disproportionately
 - The police misconduct data is coming from the Innocence Project of Louisiana: https://hub.wrgl.co/@ipno/r/data/refs/heads/allegation#preview
 
 ## Product
-The dashboard can be found here (currently password protect, please eappelson@laaclu.org for access): https://www.aclujusticelab.org/data-2/
+The dashboard can be found here (currently password protect, contact eappelson@laaclu.org for access): https://www.aclujusticelab.org/data-2/
 
 ![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
