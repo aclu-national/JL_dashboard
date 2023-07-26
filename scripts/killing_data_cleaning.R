@@ -8,6 +8,8 @@ library(readxl)
 
 # Reading in data 
 killing_data <- read_excel("original_data/killing_original_data/JL_killed_raw_06092023.xlsx")
+agency_locations <- read_csv("original_data/misconduct_original_data/data_agency-reference-list.csv")
+
 
 # Filtering for Louisiana killings and cleaning
 la_killing <- killing_data %>%
@@ -126,9 +128,6 @@ race_by_parish <- la_killing %>%
   tabyl(parish, victims_race)
 
 
-
-
-
 # Months without a police killing in Louisiana
 months_no_killing <- 125 - length(unique(format(as.Date(la_killing$date_of_incident_month_day_year), "%Y-%m")))
 
@@ -185,15 +184,42 @@ mental_health <- la_killing %>%
 
 # Police Department Graphs
 killings_per_department <- la_killing %>% 
-  mutate(departments = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
-  unnest(departments) %>%
-  tabyl(departments, victims_race) %>%
+  mutate(agency_name = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
+  unnest(agency_name) %>%
+  tabyl(agency_name, victims_race) %>%
   adorn_totals(where = "col")
+
+# Police agencies represented
+departments_represented <- killings_per_department %>%
+  select("agency_name","Total") %>%
+  mutate(agency_name = ifelse(str_detect(agency_name, "Parish"),
+                              agency_name,
+                              gsub("Sheriff's Office", 
+                                   "Parish Sheriff's Office", 
+                                   agency_name))) %>%
+  merge(agency_locations, by = "agency_name", all = TRUE) %>%
+  mutate(agency_slug = ifelse(is.na(Total), 
+                              "Not Represented in the Killing Data", 
+                              "Represented in the Killing Data"))
+
+write.csv(departments_represented)
+
+# Average number of killings per department
+ave_total_killings_per_department <- mean(killings_per_department$Total)
+ave_black_killings_per_department <- mean(filter(killings_per_department, Black != 0)$Black)
+ave_white_killings_per_department <- mean(filter(killings_per_department, White != 0)$White)
+
+# Number of departments
+n_total_departments_killings <- nrow(killings_per_department)
+n_black_departments_killings <- nrow(filter(killings_per_department, Black != 0))
+n_white_departments_killings <- nrow(filter(killings_per_department, White != 0))
+
 
 # Mapping
 mapping_department_killings <- la_killing %>%
   unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
   select("date_of_incident_month_day_year", "latlong", "agency_responsible_for_death")
+
 
 # Charge status distribution
 charge_status <- la_killing %>%
@@ -201,5 +227,5 @@ charge_status <- la_killing %>%
   tabyl(criminal_charges)
 
 # Disposition status distribution
-la_killing %>%
+disposition_status <- la_killing %>%
   tabyl(official_disposition_of_death_justified_or_other)
