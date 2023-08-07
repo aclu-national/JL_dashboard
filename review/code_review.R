@@ -96,7 +96,8 @@ misconduct %>%
 # Incompleteness scores for each department
 # AY: can you walk me through what your process is here? also introducing skimr package in case it's useful
 
-skimr::skim(misconduct)
+skimr::skim(misconduct) %>%
+  View()
 
 incompleteness_score <- misconduct %>%
   mutate(score = rowSums(is.na(.))) %>%
