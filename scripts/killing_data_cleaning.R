@@ -1,3 +1,5 @@
+# ------------------------------------- Loading Packages and Data ------------------------------------------
+
 # Loading in libraries
 library(janitor)
 library(lubridate)
@@ -7,9 +9,11 @@ library(zoo)
 library(readxl)
 
 # Reading in data 
-killing_data <- read_excel("original_data/killing_original_data/JL_killed_raw_06092023.xlsx")
-agency_locations <- read_csv("original_data/misconduct_original_data/data_agency-reference-list.csv")
+killing_data <- read_csv(here::here("original_data/killing_original_data/Mapping Police Violence.csv"))
+agency_locations <- read_csv(here::here("original_data/misconduct_original_data/data_agency-reference-list.csv"))
 
+
+# ------------------------------------- Cleaning Data Process ----------------------------------------------
 
 # Filtering for Louisiana killings and cleaning
 la_killing <- killing_data %>%
@@ -17,14 +21,15 @@ la_killing <- killing_data %>%
   filter(state == "LA") %>%
   separate_wider_delim(county, delim = " Parish", names = c("parish", "extra"), too_few = "align_start") %>%
   select(-extra) %>%
-  mutate(victims_race = if_else(victims_race == "Unknown race", "Unknown Race", victims_race),
-         year = year(date_of_incident_month_day_year),
-         year_month = month(date_of_incident_month_day_year),
+  mutate(race = if_else(race == "Unknown race", "Unknown Race", race),
+         date = mdy(date),
+         year = year(date),
+         year_month = month(date),
          age_category = case_when(
-           victims_age < 18 ~ "<18",
-           victims_age >= 18 & victims_age <35 ~ "18 - 34",
-           victims_age >= 35 & victims_age < 55 ~ "35 - 54",
-           victims_age >= 55 ~ "55+"))
+           age < 18 ~ "<18",
+           age >= 18 & age <35 ~ "18 - 34",
+           age >= 35 & age < 55 ~ "35 - 54",
+           age >= 55 ~ "55+"))
 
 # Loading in census data
 census_api_key("8b0dc67a5d26f4d27b193904ac4ef087b0409b5e")
@@ -52,44 +57,51 @@ census_data <- get_decennial(geography = "county", variables = v, year = "2020",
   mutate(parish = if_else(parish == "St. John the Baptist", "St. John The Baptist", parish)) %>%
   select(-extra)
 
+
+# ------------------------------------- Data Analysis Process ----------------------------------------------
+
 # Number of killings per parish
 killings_per_parish <- la_killing %>%
   tabyl(parish)
 
 # Description of deaths in each parish
 description_data <- la_killing %>%
-  select(parish, name = victims_name, age = victims_age, description = a_brief_description_of_the_circumstances_surrounding_the_death) %>%
+  select(parish, name, age, description = circumstances) %>%
   unite(name_age, c(name, age), sep = ", ")
-
-# Demographic Breakdown
 
 # Group by race
 demographic_race <- la_killing %>%
-  tabyl(victims_race)
+  tabyl(race)
 
 # Group by gender 
 demographic_gender <- la_killing %>%
-  tabyl(victims_gender)
+  tabyl(gender)
 
 # Group by age category
 demographic_age <- la_killing %>%
   tabyl(age_category)
 
 # Percent of people killed who were black 
-percent_killed_black <- demographic_race[2,3]
+percent_killed_black <- demographic_race %>%
+  filter(race == "Black") %>%
+  adorn_pct_formatting() %>%
+  pull(valid_percent)
 
 # Percent of people who are black in Louisiana population
 percent_la_black <- sum(census_data$any_part_black)/sum(census_data$total)
 
 # Percent of people killed who were male
-percent_killed_male <- demographic_gender[2,3]
+percent_killed_male <- demographic_gender %>%
+  filter(gender == "Male") %>%
+  adorn_pct_formatting() %>%
+  pull(percent)
 
 # Average age of person killed in Louisiana
-average_age_killed <- mean(as.integer(la_killing[!(la_killing$victims_age == "Unknown"),]$victims_age))
+average_age_killed <- mean(as.integer(la_killing$age), na.rm = TRUE)
 
 # Killing Rate & Demographics
 killings_rate_demographics <- la_killing %>%
-  tabyl(parish, victims_race) %>%
+  tabyl(parish, race) %>%
   adorn_totals(where = "col") %>%
   left_join(census_data, by = "parish") %>%
   mutate(total_kill_rate = 100000 * (Total / total),
@@ -100,8 +112,8 @@ killings_rate_demographics <- la_killing %>%
 
 # Killings for every hundred thousand residents by demographic
 killing_rate_total <- 100000 * nrow(la_killing)/sum(census_data$total)
-killing_rate_black <- 100000 * sum(la_killing$victims_race == "Black")/sum(census_data$any_part_black)
-killing_rate_white <- 100000 * sum(la_killing$victims_race == "White")/sum(census_data$white_alone)
+killing_rate_black <- 100000 * sum(la_killing$race == "Black", na.rm = TRUE)/sum(census_data$any_part_black)
+killing_rate_white <- 100000 * sum(la_killing$race == "White", na.rm = TRUE)/sum(census_data$white_alone)
 killing_ratio_bw <- killing_rate_black/killing_rate_white
 
 # Parishes with the most killings per hundred thousand total, black, and white residents
@@ -119,28 +131,31 @@ parish_most_white_kill_rate <- killings_rate_demographics %>%
 
 # Killings by parish and gender, race, and age
 gender_by_parish <- la_killing %>%
-  tabyl(parish, victims_gender)
+  tabyl(parish, gender)
 
 age_by_parish <- la_killing %>%
   tabyl(parish, age_category)
 
 race_by_parish <- la_killing %>%
-  tabyl(parish, victims_race)
+  tabyl(parish, race)
 
+# Number of months the data collection has occured
+date1 <- as.Date("2013-01-01")
+date2 <- as.Date("2023-07-21")
+num_months <- interval(date1, date2) %/% months(1)
 
 # Months without a police killing in Louisiana
-months_no_killing <- 125 - length(unique(format(as.Date(la_killing$date_of_incident_month_day_year), "%Y-%m")))
-
+months_no_killing <- num_months - length(unique(format(as.Date(la_killing$date), "%Y-%m")))
 
 # Moving Timeline Killings per year by demographic
 race_killing_per_year <- la_killing %>%
-  tabyl(year, victims_race)
+  tabyl(year, race)
 
 gender_killing_per_year <- la_killing %>%
-  tabyl(year, victims_gender)
+  tabyl(year, gender)
 
 age_killing_per_year <- la_killing %>%
-  tabyl(year, age_category)
+  tabyl(year, category)
 
 # Average killed per year by race
 ave_black_killed_per_year <- mean(race_killing_per_year$Black)
@@ -151,42 +166,43 @@ ave_men_killed_per_year <- mean(gender_killing_per_year$Male)
 
 # Average age killed
 ave_age_killed_per_year <- la_killing %>%
-  mutate(victims_age = as.numeric(victims_age)) %>%
+  mutate(age = as.numeric(age)) %>%
   group_by(year) %>%
-  summarize(mean_age = mean(victims_age, na.rm = T))
+  summarize(mean_age = mean(age, na.rm = T))
 
 # Armed Status Barchart
 arm_status_by_race <- la_killing %>%
-  mutate(armed_unarmed_status = if_else(str_detect(armed_unarmed_status, "Allegedly"), "Allegedly Armed", armed_unarmed_status)) %>%
-  tabyl(armed_unarmed_status, victims_race) %>%
+  mutate(allegedly_armed = if_else(str_detect(allegedly_armed, "Allegedly"), "Allegedly Armed", allegedly_armed)) %>%
+  tabyl(allegedly_armed, race) %>%
   adorn_totals(where = "col")
 
 # Flee Status Barchart
 fleeing_status <- la_killing %>%
   filter(year >= 2015) %>%
-  mutate(fleeing = if_else((is.na(fleeing_source_wa_po_and_review_of_cases_not_included_in_wa_po_database) | fleeing_source_wa_po_and_review_of_cases_not_included_in_wa_po_database == "Not Fleeing"), "Not Fleeing", "Fleeing")) %>%
-  tabyl(victims_race, fleeing) %>%
+  mutate(fleeing = if_else((is.na(wapo_flee) | wapo_flee == "Not Fleeing"), "Not Fleeing", "Fleeing")) %>%
+  tabyl(race, fleeing) %>%
   adorn_totals(where = "row")
 
 # Percent of people allegedly fleeing
-fleeing_status[6,2]/nrow(filter(la_killing, year >= 2015))
+pct_fleeing_status <- fleeing_status %>%
+  adorn_percentages()
 
 # Violent v Non-Violent
 violent_crime_distribution <- la_killing %>%
   filter(year >= 2017) %>%
-  mutate(crime_status = if_else(encounter_type_draft == "Part 1 Violent Crime" | encounter_type_draft == "Part 1 Violent Crime/Domestic Disturbance", "Violent Crime", "Non-Violent Crime")) %>%
+  mutate(crime_status = if_else(encounter_type == "Part 1 Violent Crime" | encounter_type == "Part 1 Violent Crime/Domestic Disturbance", "Violent Crime", "Non-Violent Crime")) %>%
   tabyl(crime_status)
 
-# Mental Health Pie Chart
 # Counting mental health status groups 
 mental_health <- la_killing %>%
-  tabyl(symptoms_of_mental_illness)
+  tabyl(signs_of_mental_illness)
+
 
 # Police Department Graphs
 killings_per_department <- la_killing %>% 
-  mutate(agency_name = strsplit(as.character(agency_responsible_for_death), ", ")) %>%
+  mutate(agency_name = strsplit(as.character(agency_responsible), ", ")) %>%
   unnest(agency_name) %>%
-  tabyl(agency_name, victims_race) %>%
+  tabyl(agency_name, race) %>%
   adorn_totals(where = "col")
 
 # Police agencies represented
@@ -202,30 +218,16 @@ departments_represented <- killings_per_department %>%
                               "Not Represented in the Killing Data", 
                               "Represented in the Killing Data"))
 
-write.csv(departments_represented)
-
-# Average number of killings per department
-ave_total_killings_per_department <- mean(killings_per_department$Total)
-ave_black_killings_per_department <- mean(filter(killings_per_department, Black != 0)$Black)
-ave_white_killings_per_department <- mean(filter(killings_per_department, White != 0)$White)
-
-# Number of departments
-n_total_departments_killings <- nrow(killings_per_department)
-n_black_departments_killings <- nrow(filter(killings_per_department, Black != 0))
-n_white_departments_killings <- nrow(filter(killings_per_department, White != 0))
-
-
 # Mapping
 mapping_department_killings <- la_killing %>%
   unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
-  select("date_of_incident_month_day_year", "latlong", "agency_responsible_for_death")
-
+  select("date", "latlong", "agency_responsible")
 
 # Charge status distribution
 charge_status <- la_killing %>%
-  mutate(criminal_charges = if_else(str_detect(criminal_charges, "Charged"), "Criminal Charges", "No Known Charges")) %>%
-  tabyl(criminal_charges)
+  mutate(officer_charged = if_else(str_detect(tolower(officer_charged), "charged"), "Criminal Charges", "No Known Charges")) %>%
+  tabyl(officer_charged)
 
 # Disposition status distribution
 disposition_status <- la_killing %>%
-  tabyl(official_disposition_of_death_justified_or_other)
+  tabyl(disposition_official)
