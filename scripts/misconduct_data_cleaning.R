@@ -9,10 +9,10 @@ library(scales)
 library(openxlsx)
 
 # Defining Links
-allegation_link = "original_data/misconduct_original_data/LLEAD_data/data_allegation.csv"
-personnel_link = "original_data/misconduct_original_data/LLEAD_data/data_personnel.csv"
-agency_locations_link = "original_data/misconduct_original_data/LLEAD_data/data_agency-reference-list.csv"
-history_ids_link = "original_data/misconduct_original_data/LLEAD_data/data_post-officer-history.csv"
+allegation_link = "original_data/misconduct_original_data/data_allegation.csv"
+personnel_link = "original_data/misconduct_original_data/data_personnel.csv"
+agency_locations_link = "original_data/misconduct_original_data/data_agency-reference-list.csv"
+history_ids_link = "original_data/misconduct_original_data/data_post-officer-history.csv"
 
 # Reading in data
 allegations <- read_csv(here::here(allegation_link))
