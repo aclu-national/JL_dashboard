@@ -6,12 +6,16 @@ library(janitor)
 library(zoo)
 
 # Defining Links
-pd_sizes_link = "original_data/misconduct_original_data/department_size/pe_1960_2022.csv"
-agency_locations_link = "original_data/misconduct_original_data/LLEAD_data/data_agency-reference-list.csv"
+pd_sizes_link = "original_data/overview/pe_1960_2022.csv"
+agency_locations_link = "original_data/misconduct_original_data/data_agency-reference-list.csv"
+pd_references_link = "original_data/overview/35158-0001-Data.rda"
 
 # Reading in data
 pd_sizes <- read_csv(here::here(pd_sizes_link))
 agency_locations <- read_csv(here::here(agency_locations_link))
+
+# Loading in data
+pd_references <- load(here::here(pd_references_link))
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
