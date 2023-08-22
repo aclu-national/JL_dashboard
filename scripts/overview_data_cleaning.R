@@ -4,20 +4,31 @@
 library(lubridate)
 library(janitor)
 library(zoo)
+library(tidyverse)
 
 # Defining Links
-pd_sizes_link = "original_data/overview/pe_1960_2022.csv"
+pd_sizes_link = "original_data/overview_original_data/pe_1960_2022.csv"
 agency_locations_link = "original_data/misconduct_original_data/data_agency-reference-list.csv"
-pd_references_link = "original_data/overview/35158-0001-Data.rda"
+pd_references_link = "original_data/overview_original_data/ICPSR_35158/DS0001/35158-0001-Data.rda"
 
 # Reading in data
 pd_sizes <- read_csv(here::here(pd_sizes_link))
 agency_locations <- read_csv(here::here(agency_locations_link))
 
 # Loading in data
-pd_references <- load(here::here(pd_references_link))
+load(here::here(pd_references_link))
+
+pd_references <- da35158.0001
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
+
+pd_references <- pd_references %>%
+  rename(ori = ORI9,
+         agency_full_name = NAME)
+
+
+pd_references
+
 
 # Defining agency type key words
 constable <- c("constable")
@@ -41,7 +52,9 @@ la_pd_sizes <- pd_sizes %>%
   filter(state_abbr == "LA") %>%
   left_join(pd_references, by = "ori") %>%
   mutate(agency_name = str_trim(str_to_title(agency_full_name)),
-         agency_name = ifelse(is.na(agency_name), pub_agency_name, agency_name))
+         agency_name = ifelse(is.na(agency_name), pub_agency_name, agency_name),
+         agency_name = str_replace(agency_name, "Dept|Dept.|Pd", "Police Department"),
+         agency_name = str_remove(agency_name, "\\.$"))
 
 # Filtering data for just 2022
 la_pd_sizes_2022 <- la_pd_sizes %>%
