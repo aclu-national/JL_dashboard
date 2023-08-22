@@ -23,6 +23,7 @@ pd_references <- da35158.0001
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
 pd_references <- pd_references %>%
+  select(ORI9, NAME) %>%
   rename(ori = ORI9,
          agency_full_name = NAME)
 
@@ -88,7 +89,9 @@ officers_over_time <- la_pd_sizes %>%
             "pub_agency_name")) %>%
   group_by(agency_name) %>%
   fill(2:64, .direction = 'updown') %>%
-  distinct(agency_name, .keep_all = TRUE)
+  distinct(agency_name, .keep_all = TRUE) %>%
+  select(64:2) %>%
+  arrange(agency_name)
 
 # Mapping average number of officers per agency
 average_agency_map <- la_pd_sizes_2022 %>% 
