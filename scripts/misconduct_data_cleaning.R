@@ -279,7 +279,7 @@ misconduct_allegation_long <- misconduct %>%
     allegation_category == "allegation_type_domestic_violence" ~ "Domestic Violence",
     allegation_category == "allegation_type_falsifying_reports" ~ "Falsifying Reports",
     allegation_category == "allegation_type_harassment_intimidation" ~ "Harassment and Intimidation",
-    allegation_category == "allegation_type_improper_equipment" ~ "Improper Equipment",
+    allegation_category == "allegation_type_improper_equipment" ~ "Improper Equipment Use",
     allegation_category == "allegation_type_mishandling_evidence" ~ "Mishandling Evidence",
     allegation_category == "allegation_type_profiling" ~ "Profiling",
     allegation_category == "allegation_type_sexual_assault" ~ "Sexual Assault",
@@ -290,7 +290,17 @@ misconduct_allegation_long <- misconduct %>%
     allegation_category == "allegation_type_other" ~ "Other Allegation",
     allegation_category == "allegation_type_no_reported" ~ "No Allegation Reported",
     TRUE ~ allegation_category
-  )) %>%
+  ),
+  allegation_category_simplified = ifelse(allegation_category %in% c("Domestic Violence",
+                                                                     "Sexual Assault",
+                                                                     "Use of Force"),
+                                          "Physical Violence",
+                                          ifelse(allegation_category %in% c("Harassment and Intimidation",
+                                                                            "Sexual Harassment"),
+                                                 "Harassment", 
+                                                 ifelse(allegation_category == "No Allegation Reported", "No Allegation Reported",
+                                                        "Other Allegation")))
+  ) %>%
   select(-c("value"))
   
 
@@ -320,12 +330,20 @@ misconduct_action_long <- misconduct %>%
     action_category == "action_type_no_reported" ~ "No Repercussion Reported",
     action_category == "action_type_other" ~ "Other Repercussion",
     TRUE ~ action_category
-  )) %>%
+  ),
+  action_category_simplified = ifelse(action_category %in% c("Terminated","Suspended"),
+                                          "Terminated or Suspended",
+                                          ifelse(action_category == "Other Repercussion",
+                                                 "Other Repercussion", 
+                                                 ifelse(action_category == "No Action Reported", "No Action Reported",
+                                                        ifelse(action_category %in% c("Arrested", "Decertified"),
+                                                               "External Repercussion",
+                                                               "Corrective Measures")
+                                                 )
+                                          )
+  ))%>%
   select(-c("value"))
 
-
-the <- merge(misconduct_action_long, misconduct_allegation_long, by = "index") %>% 
-  select(c("index","allegation_category", "action_category"))
 
 # ------------------------------------- Data Analysis Process ----------------------------------------------
 
@@ -362,8 +380,8 @@ get_pct_var_reported(agency_name, sex)
 # % of officers whose names are included
 get_pct_var_reported(index, full_name)
 
-# % of allegations that have reported dispositions
-get_pct_var_reported(index, disposition)
+# % of allegations that have reported repercussions
+get_pct_var_reported(index, action)
 
 # Incompleteness scores for each department. The scoring works by
 # counting the number of incomplete values for the officers full name,
@@ -438,6 +456,28 @@ outside_repercussion_distribution <- misconduct_action_long %>%
   filter(action_category %in% c("Arrested", "Decertified")) %>%
   tabyl(action_category)
 
+# Allegations by department type
+allegation_department_type <- misconduct_allegation_long %>%
+  filter(allegation_category != "No Allegation Reported") %>%
+  tabyl(allegation_category_simplified, agency_type)
+
+# Dispositions by department type
+disposition_department_type <- misconduct %>%
+  filter(disposition_category != "No Disposition Reported") %>%
+  tabyl(disposition_category, agency_type)
+
+# Internal Repercussions by department type
+internal_repercussion_department_type <- misconduct_action_long %>%
+  filter(!(action_category %in% c("No Repercussion Reported"))) %>%
+  tabyl(action_category_simplified, agency_type)
+
+# External Repercussions by department type
+external_repercussion_department_type <- misconduct_action_long %>%
+  filter(action_category %in% c("Arrested","Decertified")) %>%
+  tabyl(action_category, agency_type)
+
+
+
 # Number of use of force allegations
 n_uof <- allegation_distribution %>%
   filter(allegation_category == "Use of Force") %>%
@@ -454,11 +494,12 @@ n_terminated <- internal_repercussion_distribution %>%
   filter(action_category == "Terminated") %>%
   pull(n)
 
+
 # Percent of allegations terminated
-pct_terminated <- repercussion_distribution %>%
-  filter(action_classification == "Termination") %>%
+pct_terminated <- internal_repercussion_distribution %>%
+  filter(action_category == "Terminated") %>%
   adorn_pct_formatting() %>%
-  pull(valid_percent)
+  pull(percent)
 
 # Number of arrests
 n_arrests <- outside_repercussion_distribution %>%
@@ -490,6 +531,10 @@ repercussion_by_allegation <- merge(misconduct_action_long, misconduct_allegatio
                                   "Decertified"))) %>%
   tabyl(allegation_category, action_category)
 
+
+the <- merge(misconduct_action_long, misconduct_allegation_long, by = "index") %>% 
+  tabyl(allegation_category, action_category_simplified)
+
 # Long distribution of repercussions by misconduct type
 long_repercussion_by_allegation <- repercussion_by_allegation %>%
   pivot_longer(.,!allegation_category, names_to = "action_category", values_to = "count") %>%
@@ -504,8 +549,10 @@ outside_repercussion_by_allegation <- merge(misconduct_action_long, misconduct_a
 
 # Allegation types and count by police department
 allegation_by_pd <- misconduct_allegation_long %>%
-  tabyl(agency_name, allegation_category) %>%
+  tabyl(agency_name, allegation_category_simplified) %>%
   mutate(across(everything(), ~ifelse(. == "0", "", .)))
+
+write.csv(outside_repercussion_by_pd, "the.csv")
 
 # Disposition types and count by police department
 disposition_by_pd <- misconduct %>%
@@ -513,15 +560,21 @@ disposition_by_pd <- misconduct %>%
   mutate(across(everything(), ~ifelse(. == "0", "", .)))
 
 # Internal repercussion types and count by police department
-repercussion_by_pd <- misconduct_action_long %>%
-  filter(!(action_category %in% c("Arrested", "Decertified"))) %>%
-  tabyl(agency_name, action_category) %>%
+internal_repercussion_by_pd <- misconduct_action_long %>%
+  tabyl(agency_name, action_category_simplified) %>%
   mutate(across(everything(), ~ifelse(. == "0", "", .)))
+
+write.csv(outside_repercussion_by_pd, "the.csv")
 
 # Outside repercussion types and count by police department
 outside_repercussion_by_pd <- misconduct_action_long %>%
-  filter(action_category %in% c("Arrested", "Decertified")) %>%
-  tabyl(agency_name, outside_action_category) %>%
+  mutate(action_category = ifelse(!(action_category %in% c("Arrested", "Decertified")),
+                                  "No External Repercussion Reported",
+                                  action_category),
+         action_category = ifelse(action_category == "No Repercussion Reported", 
+                                  "No External Repercussion Reported",
+                                  action_category)) %>%
+  tabyl(agency_name, action_category) %>%
   mutate(across(everything(), ~ifelse(. == "0", "", .)))
 
 # Defining the unique allegation types
@@ -554,3 +607,50 @@ for (allegation_value in unique_allegations){
   
   agency_allegation_list[[allegation_value]] <- percent_allegation_by_agency
 }
+
+agency_allegation_list$`Alcohol and Substance Abuse`
+
+
+unique_agencies <- sort(unique(misconduct$agency_name))
+
+officers_misconduct <- list()
+
+for (chosen_agency in unique_agencies) {
+  short_name <- str_sub(chosen_agency, 1, 31)
+  df <- misconduct %>%
+    filter(agency_name == chosen_agency) %>%
+    group_by(full_name) %>%
+    count() %>%
+    arrange(desc(n)) %>% 
+    head(250) %>%
+    rename(!!chosen_agency := n)  # Use the !! operator for dynamic renaming
+  
+  officers_misconduct[[short_name]] <- df
+}
+
+write.xlsx(officers_misconduct, "the.xlsx")
+
+
+write.csv(department_count, "the.csv")
+misconduct %>%
+  filter(agency_name == "New Orleans Police Department") %>%
+  group_by(full_name) %>%
+  count() %>%
+  arrange(desc(n)) %>% 
+  head(250) %>%
+  rename(n = agency_name)
+
+
+number_misconduct = list()
+
+for (chosen_agency in unique_agencies) {
+  short_name <- str_sub(chosen_agency, 1, 31)
+  n = nrow(filter(misconduct, agency_name == chosen_agency))
+  
+  
+  officers_misconduct[[short_name]] <- df
+}
+
+
+nrow(filter(misconduct, agency_name == "New Orleans Police Department"))
+
