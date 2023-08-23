@@ -21,7 +21,10 @@ la_killing <- killing_data %>%
   filter(state == "LA") %>%
   separate_wider_delim(county, delim = " Parish", names = c("parish", "extra"), too_few = "align_start") %>%
   select(-extra) %>%
-  mutate(race = if_else(race == "Unknown race", "Unknown Race", race),
+  mutate(race = ifelse(is.na(race), "Unknown Race", race),
+         race = ifelse(race == "Unknown race", "Unknown Race", race),
+         gender = ifelse(is.na(gender), "Unknown Gender", gender),
+         age = ifelse(is.na(age), "Unknown Age", age),
          date = mdy(date),
          year = year(date),
          year_month = month(date),
@@ -29,7 +32,10 @@ la_killing <- killing_data %>%
            age < 18 ~ "<18",
            age >= 18 & age <35 ~ "18 - 34",
            age >= 35 & age < 55 ~ "35 - 54",
-           age >= 55 ~ "55+"))
+           age >= 55 ~ "55+"),
+         parish = ifelse(parish == "Dallas", "Rapides", parish),
+         parish = str_replace(parish, "Saint", "St."),
+         parish = ifelse(parish == "Acadiana", "Acadia", parish))
 
 # Loading in census data
 census_api_key("8b0dc67a5d26f4d27b193904ac4ef087b0409b5e")
@@ -54,7 +60,6 @@ census_data <- get_decennial(geography = "county", variables = v, year = "2020",
   mutate(any_part_black = rowSums(across(contains("black")))) %>%
   select(parish = county, total, white_alone = total_population_of_one_race_white_alone, any_part_black) %>%
   separate_wider_delim(parish, delim = " Parish", names = c("parish", "extra"), too_few = "align_start") %>%
-  mutate(parish = if_else(parish == "St. John the Baptist", "St. John The Baptist", parish)) %>%
   select(-extra)
 
 
@@ -85,7 +90,7 @@ demographic_age <- la_killing %>%
 percent_killed_black <- demographic_race %>%
   filter(race == "Black") %>%
   adorn_pct_formatting() %>%
-  pull(valid_percent)
+  pull(percent)
 
 # Percent of people who are black in Louisiana population
 percent_la_black <- sum(census_data$any_part_black)/sum(census_data$total)
@@ -149,13 +154,16 @@ months_no_killing <- num_months - length(unique(format(as.Date(la_killing$date),
 
 # Moving Timeline Killings per year by demographic
 race_killing_per_year <- la_killing %>%
-  tabyl(year, race)
+  tabyl(year, race) %>%
+  mutate(across(Asian:White, cumsum))
 
 gender_killing_per_year <- la_killing %>%
-  tabyl(year, gender)
+  tabyl(year, gender) %>%
+  mutate(across(Female:Male, cumsum))
 
 age_killing_per_year <- la_killing %>%
-  tabyl(year, category)
+  tabyl(year, age_category) %>%
+  mutate(across(`<18`:`55+`, cumsum))
 
 # Average killed per year by race
 ave_black_killed_per_year <- mean(race_killing_per_year$Black)
@@ -187,10 +195,15 @@ fleeing_status <- la_killing %>%
 pct_fleeing_status <- fleeing_status %>%
   adorn_percentages()
 
+pct_fleeing_status
+
 # Violent v Non-Violent
 violent_crime_distribution <- la_killing %>%
   filter(year >= 2017) %>%
-  mutate(crime_status = if_else(encounter_type == "Part 1 Violent Crime" | encounter_type == "Part 1 Violent Crime/Domestic Disturbance", "Violent Crime", "Non-Violent Crime")) %>%
+  mutate(crime_status = if_else(encounter_type %in% c("Part 1 Violent Crime", 
+                                                      "Part 1 Violent Crime/Domestic Disturbance"), 
+                                "Violent Crime", 
+                                "Non-Violent Crime")) %>%
   tabyl(crime_status)
 
 # Counting mental health status groups 
@@ -200,7 +213,10 @@ mental_health <- la_killing %>%
 
 # Police Department Graphs
 killings_per_department <- la_killing %>% 
-  mutate(agency_name = strsplit(as.character(agency_responsible), ", ")) %>%
+  mutate(
+    agency_name = str_split(as.character(str_replace_all(agency_responsible, ", ", ",")), ","),
+    agency_name = map(agency_name, ~ str_remove_all(.x, '^"|"$'))
+  ) %>%
   unnest(agency_name) %>%
   tabyl(agency_name, race) %>%
   adorn_totals(where = "col")
@@ -218,16 +234,35 @@ departments_represented <- killings_per_department %>%
                               "Not Represented in the Killing Data", 
                               "Represented in the Killing Data"))
 
+
 # Mapping
 mapping_department_killings <- la_killing %>%
   unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
-  select("date", "latlong", "agency_responsible")
+  select("date", "latlong", "agency_responsible") %>%
+  arrange(date)
+
+# Officers who killed people
+officers_killing <- la_killing %>%
+  mutate(
+    officers = gsub("\\s*\\([^\\)]*\\)\\s*", "", officer_names, perl = TRUE),
+    officers = strsplit(officers, "\\s* and \\s*|,\\s*")
+  ) %>%
+  unnest(officers) %>%
+  mutate(officer_date = paste0(officers, ", " , date)) %>%
+  drop_na(officers) %>%
+  select(officer_date)
 
 # Charge status distribution
 charge_status <- la_killing %>%
   mutate(officer_charged = if_else(str_detect(tolower(officer_charged), "charged"), "Criminal Charges", "No Known Charges")) %>%
   tabyl(officer_charged)
 
+charge_status
+
 # Disposition status distribution
 disposition_status <- la_killing %>%
   tabyl(disposition_official)
+
+disposition_status
+
+
