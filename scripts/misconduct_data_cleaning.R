@@ -130,6 +130,9 @@ type_disposition <- c("exonerat", "unfound", "withdraw", "unfound")
 
 # Defining an allegation check function to increase workflow
 allegation_check <- function(data, category){
+  
+  # If any of the allegation, allegation description, or allegation
+  # sub description include anything in the category, then "Yes" and if not give NA
   ifelse(str_detect(paste(data$allegation, data$allegation_desc, data$allegation_sub_desc), 
                     paste(category, collapse = "|")),
          "Yes", 
@@ -138,6 +141,8 @@ allegation_check <- function(data, category){
 
 # Defining an action check function to increase workflow
 action_check <- function(data, category){
+  
+  # If the action includes anything in the category, then "Yes" and if not give NA
   ifelse(str_detect(data$action, 
                     paste(category, collapse = "|")),
          "Yes", 
@@ -608,49 +613,26 @@ for (allegation_value in unique_allegations){
   agency_allegation_list[[allegation_value]] <- percent_allegation_by_agency
 }
 
-agency_allegation_list$`Alcohol and Substance Abuse`
-
-
+# Defining the unique agencies types
 unique_agencies <- sort(unique(misconduct$agency_name))
 
+# Defining list for the loop below
 officers_misconduct <- list()
 
+# Loop
 for (chosen_agency in unique_agencies) {
+  
+  # Creating a shortened name that can be exported in excel
   short_name <- str_sub(chosen_agency, 1, 31)
+  
+  # Finding officers with the most allegations per agency
   df <- misconduct %>%
     filter(agency_name == chosen_agency) %>%
     group_by(full_name) %>%
     count() %>%
     arrange(desc(n)) %>% 
     head(250) %>%
-    rename(!!chosen_agency := n)  # Use the !! operator for dynamic renaming
+    rename(!!chosen_agency := n)
   
   officers_misconduct[[short_name]] <- df
 }
-
-write.xlsx(officers_misconduct, "the.xlsx")
-
-
-write.csv(department_count, "the.csv")
-misconduct %>%
-  filter(agency_name == "New Orleans Police Department") %>%
-  group_by(full_name) %>%
-  count() %>%
-  arrange(desc(n)) %>% 
-  head(250) %>%
-  rename(n = agency_name)
-
-
-number_misconduct = list()
-
-for (chosen_agency in unique_agencies) {
-  short_name <- str_sub(chosen_agency, 1, 31)
-  n = nrow(filter(misconduct, agency_name == chosen_agency))
-  
-  
-  officers_misconduct[[short_name]] <- df
-}
-
-
-nrow(filter(misconduct, agency_name == "New Orleans Police Department"))
-
