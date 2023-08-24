@@ -1,7 +1,7 @@
 # Visualizing Police Violence in Louisiana
 Git for the Justice Lab: Visualizing Police Violence in Louisiana dashboard. This git includes documentation, data, and scripts used to build this project, as well as all other work associated with the project.
 
-<img src = https://github.com/aclu-national/JL_dashboard/blob/114931201259b74e4fa7fe6158738d8dde7f9901/snippet/visual.png >
+<img src = https://github.com/aclu-national/JL_dashboard/blob/c9dff0e54754f8c63b683ff4e0241ba184d54a52/snippet/visual.png >
 
 ## Mission
 Louisiana is experiencing an epidemic of police violence that disproportionately impacts people of color. Our mission is to enhance public awareness and promote a deeper understanding of police misconduct in Louisiana. Through this interactive platform, we aim to inform the public about police violence incidents, including killings, by providing comprehensive data visualizations, with data sourced from Mapping Police Violence, the Louisiana Law Enforcement Accountability Database, the FBI Crime Data Explorer, and the 2020 U.S. Census.
