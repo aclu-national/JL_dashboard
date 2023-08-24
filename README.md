@@ -1,6 +1,9 @@
 # Visualizing Police Violence in Louisiana
 Git for the Justice Lab: Visualizing Police Violence in Louisiana dashboard. This git includes documentation for the project, the data, the scripts to clean the data, the cleaned data, and all other work associated with the project. 
 
+<img src = https://github.com/aclu-national/JL_dashboard/blob/114931201259b74e4fa7fe6158738d8dde7f9901/snippet/visual.png >
+
+
 ## Description
 The dashboard is split into two halves: Police Killing and Police Misconduct dashboard. Each dashboard will include facts, figures, text, and plots to describe the harmful aspects of policing in Louisiana.
 
@@ -22,6 +25,3 @@ Data on known misconduct by police officers were obtained by LLEAD through publi
 
 ## Product
 The dashboard can be found here (currently password protect, contact eappelson@laaclu.org for access): https://www.aclujusticelab.org/data-2/
-
-### Example
-<img src = https://github.com/aclu-national/JL_dashboard/blob/114931201259b74e4fa7fe6158738d8dde7f9901/snippet/visual.png >
