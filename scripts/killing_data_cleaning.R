@@ -326,4 +326,21 @@ charge_status <- la_killing %>%
 
 # Disposition status distribution
 disposition_status <- la_killing %>%
-  tabyl(disposition_official)
+  mutate(
+    
+    # Making dispositions lowercase
+    disposition_official = tolower(disposition_official),
+    
+    # Creating disposition categories
+    disposition_fixed = case_when(
+      str_detect(disposition_official, "charged") ~ "Charged",
+      str_detect(disposition_official, "pending|under") ~ "Pending Investigation",
+      str_detect(disposition_official, "justified") ~ "Justified",
+      str_detect(disposition_official, "cleared") ~ "Cleared",
+      str_detect(disposition_official, "family awarded") ~ "Family Awarded Money",
+      str_detect(disposition_official, "unreported") ~ "Unreported",
+      disposition_official %in% c("unknown", NA) ~ "Unknown",
+      TRUE ~ disposition_official
+    )
+  ) %>%
+  tabyl(disposition_fixed)
