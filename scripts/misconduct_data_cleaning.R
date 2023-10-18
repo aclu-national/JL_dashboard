@@ -139,24 +139,24 @@ sexual_harassment <- c("sexual harassment",
                        "sexual misconduct", 
                        "sexual harrassment")
 
-wrongful_interference <- c("improper",
-                           "interfer",
-                           "alarming",
-                           "police action", 
-                           "intervention",
+wrongful_interference <- c("improper search",
+                           "improper stop",
+                           "improper arrest",
+                           "improper seizure",
                            "false arrest", 
                            "false search", 
                            "false stop",
-                           "unlawful", 
+                           "false seizure",
+                           "unlawful search", 
+                           "unlawful arrest",
+                           "unlawful stop",
+                           "unlawful seizure",
                            "illegal stop",
                            "illegal search", 
-                           "illegal arrest", 
-                           "false accusation", 
-                           "failure to honor", 
-                           "unauthorize", 
-                           "wrongful", 
-                           "arrest, search, and seizur",
-                           "forcible")
+                           "illegal arrest",
+                           "illegal seizure",
+                           "false accusation",
+                           "arrest, search, and seizure")
 use_of_force <- c("shoot", 
                   "battery", 
                   "assault",
@@ -323,6 +323,15 @@ type_action <- c("suspen",
                  "reprimand",
                  "criminal")
 
+cancelled <- c("cancel")
+
+admin_review <- c("admin")
+
+hearing <- c("hearing")
+
+office_investigation <- c("investigat")
+
+settlement_negotiation <- c("negotiat")
 
 # Actions key words
 arrest <- c("arrest")
@@ -556,10 +565,16 @@ misconduct <- personnel %>%
                                          ifelse(str_detect(tolower(agency_name), paste(sheriff, collapse = "|")), "Sheriff's Office",
                                                 ifelse(str_detect(tolower(agency_name), paste(police_department, collapse = "|")), "Police Department",
                                                        "Other Law Enforcement Agency"
-                                   )))))
+                                   ))))),
+
+# Updating agency names
+    agency_name = case_when(
+      agency_name == "New Orleans Parish Sheriff's Office" ~ "Orleans Parish Sheriff's Office",
+      agency_name == "Orleans Constable" ~ "Orleans Parish Constable",
+      agency_name == "Jefferson Constable" ~ "Jefferson Parish Constable",
+    )
 )
 
-# Creating a long dataframe for allegations as a single case 
 misconduct_allegation_long <- misconduct %>%
   mutate(across(starts_with("allegation_type"), ~ ifelse(. == "Yes", cur_column(), NA))) %>%
   pivot_longer(
@@ -581,7 +596,7 @@ misconduct_allegation_long <- misconduct %>%
     allegation_category == "allegation_type_profiling" ~ "Profiling",
     allegation_category == "allegation_type_sexual_assault" ~ "Sexual Assault",
     allegation_category == "allegation_type_sexual_harassment" ~ "Sexual Harassment",
-    allegation_category == "allegation_type_wrongful_interference" ~ "Wrongful Interference",
+    allegation_category == "allegation_type_wrongful_interference" ~ "Improper Stop, Search, Seizure, or Arrest",
     allegation_category == "allegation_type_use_of_force" ~ "Use of Force",
     allegation_category == "allegation_type_other" ~ "Miscellanious Allegation",
     allegation_category == "allegation_type_no_reported" ~ "No Allegation Reported",
@@ -673,6 +688,9 @@ misconduct_action_long <- misconduct %>%
   ) %>%
   select(-c("value"))
 
+misconduct %>%
+  tabyl(agency_name) %>%
+  arrange(desc(n))
 # ------------------------------------- Data Analysis Process ----------------------------------------------
 
 # Number of allegations in the data
