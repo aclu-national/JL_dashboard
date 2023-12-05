@@ -32,6 +32,8 @@ Training data on misconduct allegations from LLEAD was built on November 3rd, 20
 
 After creating the training data, three different models (Random Forest, Support Vector Machine, Naive Bayes) were fit on allegations, dispositions, and repercussions using 50-50 train-test splits, including departments as a variable. The best models and hyperparameters were identified based on accuracy and F1 scores. Using these models, we predicted classifications for future misconduct data from LLEAD. Note that this process will continue to evolve as more data is downloaded.
 
+You can find more information on the difficulty of classifying these police misconduct allegations in this [Medium Article](https://medium.com/@eappelson/navigating-the-complexity-of-classifying-police-misconduct-allegations-in-louisiana-0dd107ca7531).
+
 ## Data
 - Mapping Police Violence data: https://airtable.com/shroOenW19l1m3w0H/tblxearKzw8W7ViN8
 - LLEAD data: https://hub.wrgl.co/@ipno/r/data (use `data_years.csv` to see the years the data is coming from)
