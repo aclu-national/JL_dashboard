@@ -9,7 +9,7 @@ library(zoo)
 
 # Defining Links
 killing_data_link <- "data/killing_data/Mapping Police Violence.csv"
-agency_locations_link <- "data/misconduct_data/training_data/data_agency-reference-list.csv"
+agency_locations_link <- "data/misconduct_data/data_agency-reference-list.csv"
 
 # Reading in data
 killing_data <- read_csv(here::here(killing_data_link))
@@ -18,7 +18,8 @@ agency_locations <- read_csv(here::here(agency_locations_link))
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
-nrow(la_killing)
+# Variable to write in the newest date the data was available
+newest_date = "2023-10-20"
 
 # Filtering for Louisiana killings and cleaning
 la_killing <- killing_data %>%
@@ -51,7 +52,8 @@ la_killing <- killing_data %>%
            age < 18 ~ "<18",
            age >= 18 & age < 35 ~ "18 - 34",
            age >= 35 & age < 55 ~ "35 - 54",
-           age >= 55 ~ "55+"),
+           age >= 55 ~ "55+",
+           TRUE ~ NA),
          parish = ifelse(parish == "Dallas", "Rapides", parish),
          parish = str_replace(parish, "Saint", "St."),
          parish = ifelse(parish == "Acadiana", "Acadia", parish),
@@ -173,10 +175,6 @@ killing_ratio_bw
 parish_most_total_kill_rate <- killings_rate_demographics %>%
   arrange(desc(total_kill_rate))
 
-parish_most_total_kill_rate$ratio_bw
-it <- parish_most_total_kill_rate %>%
-  select(parish, ratio_bw)
-
 parish_most_black_kill_rate <- killings_rate_demographics %>%
   arrange(desc(black_kill_rate))
 
@@ -186,7 +184,6 @@ parish_most_white_kill_rate <- killings_rate_demographics %>%
 # Killings by parish and gender, race, and age
 gender_by_parish <- la_killing %>%
   tabyl(parish, gender)
-  
 
 age_by_parish <- la_killing %>%
   tabyl(parish, age_category)
@@ -196,7 +193,7 @@ race_by_parish <- la_killing %>%
 
 # Number of months the data collection has occurred
 date1 <- as.Date("2013-01-01")
-date2 <- as.Date("2023-10-20")
+date2 <- as.Date(newest_date) # Change for the newest update
 num_months <- interval(date1, date2) %/% months(1)
 num_months
 # Months without a police killing in Louisiana
@@ -208,7 +205,7 @@ race_killing_per_year <- la_killing %>%
   
   # Aggregating values
   mutate(across(Asian:White, cumsum)) %>%
-  t() 
+  t()
 
 colnames(race_killing_per_year) <- NULL
 
@@ -372,27 +369,3 @@ disposition_status <- la_killing %>%
     )
   ) %>%
   tabyl(disposition_fixed)
-
-disposition_status
-
-it <- la_killing %>%
-  mutate(
-    
-    # Making dispositions lowercase
-    disposition_official = tolower(disposition_official),
-    
-    # Creating disposition categories
-    disposition_fixed = case_when(
-      str_detect(disposition_official, "charged") ~ "Charged",
-      str_detect(disposition_official, "pending|under") ~ "Pending Investigation",
-      str_detect(disposition_official, "justified") ~ "Justified",
-      str_detect(disposition_official, "cleared") ~ "Cleared",
-      str_detect(disposition_official, "family awarded") ~ "Family Awarded Money",
-      str_detect(disposition_official, "unreported") ~ "Unreported",
-      disposition_official %in% c("unknown", NA) ~ "Unknown",
-      TRUE ~ disposition_official
-    )
-  ) %>%
-  filter(disposition_fixed == "Pending Investigation") %>%
-  tabyl(year) %>%
-  arrange(desc(year))
