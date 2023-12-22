@@ -1,18 +1,16 @@
 library(shiny)
 library(tidyverse)
 library(DT)
-library(tidyverse)
 library(janitor)
 library(tidycensus)
 library(shinyWidgets)
-
-
+library(shinyjs)
 
 # Defining data
-allegation_link = "data_allegation.csv"
-personnel_link = "data_personnel.csv"
-agency_locations_link = "data_agency-reference-list.csv"
-history_ids_link = "data_post-officer-history.csv"
+allegation_link <- "data_allegation.csv"
+personnel_link <- "data_personnel.csv"
+agency_locations_link <- "data_agency-reference-list.csv"
+history_ids_link <- "data_post-officer-history.csv"
 
 # Loading data
 allegations <- read_csv(here::here(allegation_link))
@@ -26,31 +24,20 @@ agency_locations <- agency_locations %>%
 
 # Creating the misconduct training dataframe
 df <- personnel %>%
-  
-  # Uniting names into a fullname
   unite(col = 'full_name', 
         c('first_name', "middle_name", 'last_name'), 
         sep = " ", 
         na.rm = TRUE, 
         remove = FALSE) %>%
-  
-  # Joining personnel with historical IDs
   left_join(history_ids %>% 
               select("uid", "history_id"), 
             by = "uid") %>%
-  
-  # Joining personnel with their allegations
-  right_join(allegations, 
-             by = c("uid")) %>%
+  right_join(allegations, by = c("uid")) %>%
   select(-ends_with(".y")) %>%
   rename("sex" = sex.x,
          "race" = race.x,
          "agency" = agency.x) %>%
-  
-  # Joining personnel and allegations with the agency locations
-  left_join(agency_locations, 
-            by = "agency") %>%
-  
+  left_join(agency_locations, by = "agency") %>%
   mutate(
     agency_type = case_when(
       str_detect(tolower(agency_name), "university|college|campus") ~ "University or Campus Police",
@@ -70,37 +57,12 @@ df <- personnel %>%
     index = row_number()) %>%
   filter(!is.na(agency_name))
 
-
 counting_allegations <- df %>%
   tabyl(uid)
 
-
-library(shiny)
-library(shinyWidgets)
-library(DT)
-library(shiny)
-library(dplyr)
-library(DT)
-library(shinyWidgets)
-library(shinyjs)
-
-# Assuming df is your data frame
-
-library(shiny)
-library(shinyWidgets)
-library(DT)
-library(shiny)
-library(dplyr)
-library(DT)
-library(shinyWidgets)
-library(shinyjs)  # Don't forget to include shinyjs
-
-# Assuming df is your data frame
-
 ui <- fluidPage(
-  useShinyjs(),  # Add this line to use shinyjs
-  extendShinyjs(text = "shinyjs.page.fill();", functions = NULL),  # Add this line to fill the entire page
-  
+  useShinyjs(),
+  extendShinyjs(text = "shinyjs.page.fill();", functions = NULL),
   tags$head(
     tags$link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&display=swap"),
     tags$style(HTML("
@@ -108,22 +70,21 @@ ui <- fluidPage(
         font-family: 'Source Serif Pro', sans-serif;
       }
       label {
-        color: #0055AA; /* Set label color to blue */
+        color: #0055AA;
         font-size: 25px;
         font-weight: bold;
       }
       select, .selectize-input {
-        background-color: #0055AA !important; /* Set selector background color to blue */
-        color: #FFFFFF !important; /* Set selector text color to white */
-        border: 1px solid #0055AA !important; /* Set selector border color to blue */
-        border-radius: 4px !important; /* Optional: Add border radius for rounded corners */
+        background-color: #0055AA !important;
+        color: #FFFFFF !important;
+        border: 1px solid #0055AA !important;
+        border-radius: 4px !important;
       }
       .selectize-control.single .selectize-input {
-        height: 34px !important; /* Set the height of the single select input */
+        height: 34px !important;
       }
     "))
   ),
-  
   titlePanel(""),
   mainPanel(
     fluidRow(
@@ -158,7 +119,7 @@ ui <- fluidPage(
                          "Gender",
                          choices = c("All", unique(df$sex)))),
       column(12, 
-             verbatimTextOutput("percentageText")),  # Display percentage here
+             verbatimTextOutput("percentageText")),
       DTOutput("dataTable"),
       downloadButton("downloadData", "Download Data")
     )
@@ -166,7 +127,6 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  # Define a reactive expression for filtering data based on selected officer and agency
   filtered_df <- reactive({
     df %>% 
       filter(agency_name %in% input$selection) %>%
@@ -189,11 +149,9 @@ server <- function(input, output, session) {
     datatable(
       filtered_df(),
       options = list(pageLength = 10),
-      #options = list(rowCallback = JS(rowCallback))
     ) 
   })
   
-  # Display the percentage of all allegations
   output$percentageText <- renderText({
     total_rows <- nrow(df)
     filtered_rows <- nrow(filtered_df())
@@ -201,7 +159,6 @@ server <- function(input, output, session) {
     paste("Percentage of all allegations: ", round(percentage, 2), "%")
   })
   
-  # Download handler for the CSV file
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("filtered_data_", Sys.Date(), ".csv", sep = "")
