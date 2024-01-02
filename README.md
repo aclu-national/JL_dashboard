@@ -29,38 +29,14 @@ The process of cleaning police killings includes:
 6. Cleaning Parish names and removing duplicate victim names.
 7. Retreiving 2020 Census demographic data for Parishes in Louisiana.
 
-The analysis of the killing data includes:
-1. The number of police killings per parish.
-3. The number of people killed by race
-4. The number of people killed by gender
-5. The number of people killed by age category
-6. The percentage of Black people killed out of all people killed
-7. The percentage of Black people in Louisiana
-8. The percentage of males killed out of all people killed
-9. The average age of people killed
-10. The number of killings per hundred thousand residents per parish.
-11. The number of killings of Black people per hundred thousand Black residents per parish.
-12. The number of killings of white people per hundred thousand white residents per parish.
-13. The ratio of killings of Black people per hundred thousand Black residents to killings of white people per hundred thousand white residents per parish.
-14. The age of people killed in each parish
-15. The race of people killed in each parish
-16. The age category of people killed in each parish
-17. The number of months without a police killing since 1/1/13
-18. The armed status of people killed
-19. The fleeing status of people killed since 2015
-20. The percent of people fleeing when killed
-21. The type of crime committed by people killed since 2017.
-22. The mental health status of people killed.
-23. The number of police killings per law enforcement agency.
-24. The officers who commit police killings.
-25. The charge status of officers who commit police killings.
-26. The disposition status of officers who commit police killings.
-
 ### Overview
-Records of police department sizes were primarily generated using data from the FBI. The process of cleaning the department sizes includes: 
+The process of cleaning the overview data includes:
 1. Filting the FBI Crime Data Explorer Employement data for agencies in Louisiana.
 2. Joining the FBI Crime Data Explorer Employement data with Law Enforcement Agency Identifiers Crosswalk data to yeild more complete names.
-3. Cleaning agency names more thuroughly
+3. Cleaning agency names more thoroughly
+
+### Misconduct
+The process of cleaning the misconduct data includes:
 
 
 
