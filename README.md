@@ -30,7 +30,7 @@ The process of cleaning police killings includes ([see the code and analysis her
 7. Retreiving 2020 Census demographic data for Parishes in Louisiana.
 
 ### Overview
-The process of cleaning the overview data includes (see the code and analysis here):
+The process of cleaning the overview data includes ([see the code and analysis here](https://github.com/aclu-national/JL_dashboard/blob/3db697133a5cd5b05c3dd88d98bb46816bcb72e9/scripts/overview_scripts/overview_data_cleaning.R):
 1. Filtering the FBI Crime Data Explorer Employement data for agencies in Louisiana.
 2. Joining the FBI Crime Data Explorer Employement data with Law Enforcement Agency Identifiers Crosswalk data to yeild more complete names.
 3. Cleaning agency names more thoroughly
