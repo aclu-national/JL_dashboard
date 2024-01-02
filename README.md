@@ -20,7 +20,7 @@ Data on known misconduct by police officers were obtained by [LLEAD](llead.co) t
 
 ## Data Cleaning
 ### Police Killings
-The process of cleaning police killings includes (see the code and analysis here):
+The process of cleaning police killings includes ([see the code and analysis here](https://github.com/aclu-national/JL_dashboard/blob/4cc81d42c5068be139fd52ce8d21a816b737fda1/scripts/killing_scripts/killing_data_cleaning.R)):
 1. Cleaning the Mapping Police Violence data variable names.
 2. Filtering for police killings in Louisiana.
 3. Creating unknown options for the demographic variables.
