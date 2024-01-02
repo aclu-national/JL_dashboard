@@ -18,8 +18,26 @@ Data on the number of officer were obtained from the [FBI Crime Data Explorer](h
 
 Data on known misconduct by police officers were obtained by [LLEAD](llead.co) through public records requests and include public data collected from a range of law enforcement agencies including police departments, sheriff’s offices, civil service commissions, and more. To learn more about how the data is collected, you can visit their website (llead.co) or their [GitHub page](https://github.com/ipno-llead). The data that we are using was downloaded from [LLEAD](https://hub.wrgl.co/@ipno/r/data) on August 21st, 2023.
 
-## Data Creation
-Records of police killings from Mapping Police Violence were retained for analysis and visualizations. Misconduct dispositions and repercussions were categorized through a process using key word stems. However, misconduct allegations posed a challenge for the following reasons:
+## Data Cleaning and Analysis
+### Police Killings
+Records of police killings from Mapping Police Violence were largely retained for analysis and visualizations. The process of cleaning police killings for analysis include:
+1. Cleaning the variable names.
+2. Filtering for Police Killings in Louisiana.
+3. Creating unknown options for the demographic variables.
+4. Extracting different date, year, and month combinations.
+5. Creating age categories.
+6. Cleaning Parish names and removing duplicate victim names.
+7. Retreiving 2020 Census demographic data for Parishes in Louisiana.
+
+### Overview
+Records of police department sizes were primarily generated using data from the FBI. The process of cleaning the department sizes for analysis include: 
+1. Filting the FBI Crime Data Explorer Employement data for agencies in Louisiana.
+2. Joining the FBI Crime Data Explorer Employement data with Law Enforcement Agency Identifiers Crosswalk data to yeild more complete names.
+3. Cleaning agency names more thuroughly
+
+
+
+Misconduct dispositions and repercussions were categorized through a process using key word stems. However, misconduct allegations posed a challenge for the following reasons:
 
 1. **Reporting Discrepancies:** Various police departments use distinct approaches to report allegations, leading to differences in descriptions.
 2. **Data Imbalance:** Some departments contribute significantly to misconduct incidents, causing data imbalance issues. Conversely, certain agencies report minimal allegations, making it challenging for models to provide meaningful insights.
