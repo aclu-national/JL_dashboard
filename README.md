@@ -37,23 +37,7 @@ The process of cleaning the overview data includes:
 
 ### Misconduct
 The process of cleaning the misconduct data includes:
-
-
-
-Misconduct dispositions and repercussions were categorized through a process using key word stems. However, misconduct allegations posed a challenge for the following reasons:
-
-1. **Reporting Discrepancies:** Various police departments use distinct approaches to report allegations, leading to differences in descriptions.
-2. **Data Imbalance:** Some departments contribute significantly to misconduct incidents, causing data imbalance issues. Conversely, certain agencies report minimal allegations, making it challenging for models to provide meaningful insights.
-3. **Multiple Categories within a Single Allegation:** Specific allegations and repercussions may encompass multiple categories, making assigning a solitary label challenging.
-
-To address the challenge of classifying allegations, we used the following comprehensive approach:
-
-1. **Category Definition:** We manually scrutinized data to define and select categories, initially identifying patterns of misconduct.
-2. **Text Clustering Techniques:** We used techniques like Gibbs Sampling Dirichlet Multinomial Mixture (GSDMM) for refining categories. While successful, some clusters lacked real-world relevance, leading to their merging with assumed categories.
-3. **Labeling Data:** We multi-labeled 500 randomly sampled unique allegation and allegation description pairs (they represent over 6000 allegations-allegation description pairs in our total dataframe) with 41 categories. [Click here](fakelink.com) to see the categories and their descriptions.
-
-Following the creation of the training data, we implemented a zero-shot multi-label model (regex on key word stems) and two few-shot multi-label models (Random Forest and Support Vector Machine using grid-fold cross-validation). It's important to note that the zero-shot model was trained on the entire labeled dataset, while the few-shot models underwent training using an 80-20 train-test split to ensure ample training data. The best model was identified based on overall accuracy, as well as macro and micro-F1 scores. Subsequently, using this optimized model, we predicted classifications for all misconduct allegations. Note that this process remains dynamic and will evolve with the continuous influx of additional data.
-
+1. 
 ## Data
 - Mapping Police Violence data: https://airtable.com/shroOenW19l1m3w0H/tblxearKzw8W7ViN8
 - LLEAD data: https://hub.wrgl.co/@ipno/r/data (use `data_years.csv` to see the years the data is coming from)
