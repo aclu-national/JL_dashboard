@@ -18,9 +18,9 @@ Data on the number of officer were obtained from the [FBI Crime Data Explorer](h
 
 Data on known misconduct by police officers were obtained by [LLEAD](llead.co) through public records requests and include public data collected from a range of law enforcement agencies including police departments, sheriff’s offices, civil service commissions, and more. To learn more about how the data is collected, you can visit their website (llead.co) or their [GitHub page](https://github.com/ipno-llead). The data that we are using was downloaded from [LLEAD](https://hub.wrgl.co/@ipno/r/data) on August 21st, 2023.
 
-## Data Cleaning and Analysis
+## Data Cleaning
 ### Police Killings
-The process of cleaning police killings includes:
+The process of cleaning police killings includes (see the code and analysis here):
 1. Cleaning the Mapping Police Violence data variable names.
 2. Filtering for police killings in Louisiana.
 3. Creating unknown options for the demographic variables.
@@ -30,14 +30,22 @@ The process of cleaning police killings includes:
 7. Retreiving 2020 Census demographic data for Parishes in Louisiana.
 
 ### Overview
-The process of cleaning the overview data includes:
-1. Filting the FBI Crime Data Explorer Employement data for agencies in Louisiana.
+The process of cleaning the overview data includes (see the code and analysis here):
+1. Filtering the FBI Crime Data Explorer Employement data for agencies in Louisiana.
 2. Joining the FBI Crime Data Explorer Employement data with Law Enforcement Agency Identifiers Crosswalk data to yeild more complete names.
 3. Cleaning agency names more thoroughly
 
 ### Misconduct
-The process of cleaning the misconduct data includes:
-1. 
+The process of cleaning the misconduct data includes (see the code and analysis here):
+1. Creating a full name variable in the LLEAD personnel data.
+2. Joining the LLEAD personnel data with the LLEAD History ID data via their unique identifiers.
+3. Renaming the repeated officer demographic variables.
+4. Joining the above dataframe with the LLEAD agency location data via the agency names.
+5. Categorizing the agencies.
+6. Cleaning the agency names.
+7. Using regex to categorize the dispositions and actions
+8. Using a multi-label classification model to categorize allegations (click here to see how we built this model). 
+
 ## Data
 - Mapping Police Violence data: https://airtable.com/shroOenW19l1m3w0H/tblxearKzw8W7ViN8
 - LLEAD data: https://hub.wrgl.co/@ipno/r/data (use `data_years.csv` to see the years the data is coming from)
