@@ -3,12 +3,12 @@
 library(tidyverse)
 
 # Importing the labelled data
-labelled_data <- read_csv("labelled_data.csv")
+labelled_data <- read_csv("data_and_predictions/labelled_data.csv")
 
 # Importing the ML predictions
-rf_predictions = read_csv("rf_predictions.csv")
-svm_predictions = read_csv("svm_predictions.csv")
-test = read_csv("test_for_predictions.csv")
+rf_predictions = read_csv("data_and_predictions/rf_predictions.csv")
+svm_predictions = read_csv("data_and_predictions/svm_predictions.csv")
+test = read_csv("data_and_predictions/test_for_predictions.csv")
 
 # ----------------------------- Defining Functions ------------------------------------
 
