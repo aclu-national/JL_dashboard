@@ -110,6 +110,6 @@ predict_svm = pd.concat([X_test.reset_index(drop=True), pd.DataFrame(data=y_pred
 test = pd.concat([X_test.reset_index(drop=True), pd.DataFrame(data=y_test, columns=target_names)], axis=1)
 
 # ----------------------------- Exporting Predictions ------------------------------
-predict_rf.to_csv("test_and_predictions/rf_predictions.csv")
-predict_svm.to_csv("test_and_predictions/svm_predictions.csv")
-test.to_csv("test_and_predictions/test_for_predictions.csv")
+predict_rf.to_csv("data_and_predictions/rf_predictions.csv")
+predict_svm.to_csv("data_and_predictions/svm_predictions.csv")
+test.to_csv("data_and_predictions/test_for_predictions.csv")
