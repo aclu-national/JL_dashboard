@@ -1,0 +1,251 @@
+,allegation,allegation_desc,Abuse of Authority,Adherence to Law,Appearance and Cleanliness Violation,Arrest Violation,Arrest or Conviction,Associations Violation,Conduct Violation,Confidentiality Violation,Cooperation Violation,Detainment Violation,Discourtesy,Discrimination,Domestic Violence,Equipment Misuse and Damage,Handling Evidence Violation,Harassment,In Service Deficiency,Insubordination,Intimidation and Retaliation,Investigation Violation,Miscellaneous Allegation,Neglect of Duty,Performance of Duty,Policy and Procedure Violation,Prison-related Violation,Professionalism,Reporting Violation,Search Violation,Seizure Violation,Sexual Assault,Sexual Harassment,Stop Violation,Stop Violation ,Substance Violation,Supervision Violation,Technology Violation,Theft,Traffic Violation,Truthfulness,Use of Force,Weapon Violation
+0,instructions from a supervisor or higher ranked staff member,"deputy lena freeman refused her assignment, clocked out and left without permission.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,neglect of duty/supervisory responsibilities,failed to address suboridnate who was found to speak to a female co-worker in a manner unbecoming of an employee with the opso.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+2,failure to supervise,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+3,"criminal/immoral conduct - dr.03:09.955.01 - f. taking any action which impair the efficiency or reputation of the agency, its members, or employees - failure to observe policy - dr.03:09.957.01 - willful disregard of agency rules, regulations, policies or procedures - terminated",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+4,reporting for duty,reported 40 minutes late for duty.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+5,professionalism,reported late for duty.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+6,violation of rights,nan,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+7,"paragraph 12,13: use of tobacco",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+8,rule 4: performance of duty; paragraph 04 - neglect of duty,nopd policy: chapter 42.19 - child abuse,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+9,rule 4: performance of duty; paragraph 02 - instructions from authoritative source,policy # 1026 - title: personnel files; subsection 1026.7 declaration of domicile,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+10,truthfulness,"upon obtaining knowledge several inmates were out, failed as rank to regain control of dorm after deputy could not do so.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+11,rule 04: performance of duty; paragraph 02: instructions from an authoritative source,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+12,dr.03:09.933.01 -for his conduct to his supervisor - warning,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+13,instructions from a supervisor or higher ranked staff member,deputy blake left a special management pod 2-c unmanned.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+14,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chatper 41.3.10 - body worn camera, paragraph 10",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+15,reporting for duty,failed to report for duty as instructed by rank.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+16,rule 4: performance of duty; paragraph 02 - instructions from authoritative source,"policy # 400 - patrol operations; policy 440 - pr 440 - contacts-detentions and photographing detainees, paragraph pr440.3 (a)",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+17,failure to follow lawful orders and giving false information in reports.,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+18,rule 4: performance of duty; paragraph 02 - instructions from authoritative source,"nopd policy: chapter 41.3.10 - body worn camera, paragraph 31",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+19,internal affairs investigation,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20,pursuit policy,ofcs failed to follow pursuit policy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+21,rude behavior,nan,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+22,neglect of duty-failure to act,failed to submit a statement for a uof incident.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+23,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 41.3.10 - body worn cameras, paragraph 10, g - vehicle searches",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0
+24,code of conduct,jailer was awol,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+25,rule 06: offical information; paragraph 03: public statement and appearances,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+26,rule 2: moral conduct; paragraph 01 - adherence to law,r.s. 14:123 perjury,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+27,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source.82.1, para 14h",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+28,ems: conduct unbecoming an officer,nan,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+29,neatness,arrived to work in an filieutenanty uniform.,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+30,rude and unprofessional (je|nb),nan,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+31,group 3 - dr>03:05.150 - code of ethics a. an employeee must always conscientiously perform all assigned job duties. dr.03.09.970 a. wanton and willful neglect of duties - terminated.,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+32,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 1.2.4 - search and seizure, paragraph 20, consent to search",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+33,vehicle maintance and care,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+34,neglect of duty 01-01.12,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+35,use of departmental property,accused of working an unauthorized paid detail and not submitting a uof report when one was needed.,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+36,paragraph 06: acting in civil matters,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+37,performance of duty,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+38,dr.03:09.931.02 failure to act when necessary,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+39,group 2 - dr.03:09.916.01 - c. unsatisfactory work or failure to maintain required standard of performance - warning,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+40,neglect of duty-failure to act 5,was observed sleeping while on duty.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+41,denham springs police department general order 24,arrest for stalking,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42,excessive force,excessive force during arrest,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+43,01-01.05: courtesy,nan,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+44,code of conduct,"complainant alleges officer steven jones did not have probable cause to arrest her and was rude, disrespectful and racist.",0,0,0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+45,denham springs police department policy order 423,body word camera not categorized,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+46,"dr.03:09.957.01 violating saftey rules where there is a threat of life. dr.03:09.931.02d, failure to properly supervise subordinates. dr.03:09.957.01 willful disregard of agency rules, regulations, policy and procedures. dr.03:09.935.01c unauthorized use or misue of the agency's proerty or equipment. dr.03.:09.914b, leaving assigned work area without permission.",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+47,reporting for duty and neglect of duty-failure to act 3,fsiled to report to duty on 5/13/2021.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+48,instructions from a supervisor or higher ranked staff member,deputy sandifer was instructed that inmates are not allowed out of their cell after 2230 hours. at approximately 0330 hours deputy sandifer allowed inmates to be out of their cells.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+49,"dr.03:08.000 - employee conduct - members of the stpso shall conduct themselves at all times, both on and off duty, in such a manner as to reflect most favorably on the agency. a. members of the stpso shall conduct themselves at all times, both on and off duty, in such a manner as to reflect most favorably on the agency. unbecoming conduct shall include that which brings the agency into disrepute or reflects discredit upon the individual as a member of the stpso, or that which impairs the operation or efficiency of the stpso or the individual. d. each employee has an obligation to observe and follow the stpso policies and to maintain proper standards of conduct at all times as described herein. if an individual's behavior interferes with the orderly and efficient operation of the agency, corrective disciplinary measures may be taken. group 3 - dr.03:09.955 f. taking any action which will impair the efficiency or reputation of the agency, its members, or employees. dr.03:09.979.01 d. discussing agency legal matters with press or members of the public unless authorized by the sheriff or his designee - demoted",nan,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+50,courtesy and professionalism,engaged in a verbal altercation with rank.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+51,devoting entire time to duty,observed watching a movie on computer.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+52,reporting for duty/instructions from a supervisor or higher ranked staff member,accused of being late for duty 13 times between 3/8/2022 - 4/8/2022.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+53,inattention to duty,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+54,conduct unbecoming and insubordination,nan,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+55,professionalism,"alledged to have snatching roll sheet from sergeant brinston and stated ""these bitches will make you spit in there face""",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+56,relations with other commissioned officers,nan,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+57,code of conduct,alleges officer baltodano mirandized questioned and searched her 15 year son a parent present,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+58,ois clouse,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+59,unsatisfactory performance/insubordination,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+60,false of inaccurate reports,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+61,reporting for duty,reported 42 minutes late for work.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+62,officer involved,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+63,neglect of duty-supervisory responsibility,failed to activate bwc for a uof incident.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0
+64,"care, possession and use of firearm/explosives",unsafe in handling of firearm during inspection.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+65,denham springs police department general order 41,"tardiness, failing to attend court hearings, improper securing and handling evidence",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+66,did not return phone call,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+67,code of conduct,"officer was unprofessional, disrespectful and embarassed employee",0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+68,code of conduct,alleges did not follow proper channels to make complaint,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+69,ems: unsatisfactory performance,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+70,code of conduct,arrested for soliciting of prostitute in shreveport,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+71,cooperation,refused assignment and became disrespectful towards staff.,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+72,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source.82.1, para 14",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+73,completion/submission forms,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+74,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 1.3, Force, paragraph 21, authorized impact weapons",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+75,completion of forms,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+76,code of conduct,"aleges sgt. williams was rude, disrespectful and lied to her.",0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+77,rule 2: moral conduct; paragraph 01 - adherence to law,r.s 14:37.7 relative to domestic abuse assault,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+78,traffic violation,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+79,3:20 use of tobacco,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+80,professionalism,accused of being rude while working a paid detail at chase bank.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+81,no show,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+82,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source; nopd policy 1041.4 secondary employment, general",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+83,rule 2: moral conduct; paragraph 01 - adherence to law,r.s. 32:391 - appearance upon arrest,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+84,dr.03:09.932.01 failure to follow supervisors instructions,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+85,political activity,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+86,neglect of duty-general,"and at the beginning secure bwc and at the end of each shift.' ""3 bwc are missing """,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+87,professionalism,observed deploying one burst of oc spray through trap.,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+88,improper conduct,alleges hannah has an improper relationship with a confidential informant,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+89,neglect of duty-supervisory responsibility,failed to conduct security patrol and supervised subordinate that falls under his command.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+90,abuse of office,nan,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+91,arrested by another agency,nan,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+92,body worn camera - responsibilities,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+93,failed to turn in evidence,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+94,neglect of duty-supervisor responsibility,failure to conduct a proper headcount.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+95,procedures,observed playing in her co-workers hair.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+96,instructions from a supervisor or higher ranked staff member,extended her lunch without prior approval.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+97,falsified information on an accident report,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+98,control of prisoner while transporting,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+99,unauthorized force/physical intimidation/professionalism,engaged in a physical altercation with an employee.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+100,sexual battery of a student,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+101,unauthorized force/physical intimidation,accused of using unnessary force by taking an inmate to the ground.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+102,code of conduct,alleges racial profiling excessive detention. rudeness,0,0,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+103,rule 04: performance of duty; paragraph 01: reporting for duty,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+104,group 1 - dr. 03:09.919. - relative to willful failure to make required reports. group 2 - dr.03:09.931.02 - relative to failure to act when necessary - warning,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+105,sop.1950:01.040 - positioning of prisoners in the the transport vehicle; sop. 1950:01.050 - control of prisoners while transporting & sop.1950.100.060 - observation of prisoners while transporting - warning,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+106,neglect of duty-failure to act,resigned under investigation on 11/02/2020.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+107,failure to turn in found property,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+108,rule 03: moral conduct; paragraph 02: abuse of position,nan,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+109,reporting for duty,accused of reporting late for an emergency meeting.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+110,false presentation of statment of fact,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+111,neglect of duty-failure to act,failed to submit a uof statement.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+112,dl required,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+113,dr.07:100.000 - assignment & operation of agency vehicles - all personnel operateing agency motor vehicles shall exericse due regard for the safety of all persons - 8 hour suspension,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+114,vehicle crash,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+115,reporting for duty,failed to report to duty no call/no show.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+116,rule 4: performance of duty; paragraph 06 - leaving assigned area,paragraph b: any employee with supervisory responsibility shall be in neglect of duty whenever he/she fails to properly supervise subordinates.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+117,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source to wit nopd chapter 41.8 affidavit and summons(non-traffic) paragraph 12",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+118,failure to follow orders reference in car video camera,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+119,improper vehicle stop and search,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0
+120,dereliction of duty,failed to notify bcfd of a bomb threat per departmental policy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+121,rule 05: restricted activities; paragraph 09: criminal proceeding against member(s),nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+122,theft/false arrest,nan,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+123,neglect of duty,found to have place weapon in an unsecured employee locker.,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+124,illegal eviction,alleges officers illegally evicted her husband,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+125,dereliction of duty,supervisor advised officer to write improper citation,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+126,professionalism,accused of aggravated assaulieutenant on dating partner.,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+127,unsatisfactory work performance - suspension - 16 hours,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+128,code of conduct,complainant stated she was stopped without being told why and the officer refused to let her watch her sleeping 19 month old son.,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+129,reporting for duty,reported 24 minutes late for work.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+130,rule 4: performance of duty; paragraph 04 - neglect of duty,"patrol operations; chapter 41.3.8 title: in car camera required activation of the in car camera , paragraph 14",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+131,physical intimidation,choked an inmate.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+132,rule 4: performance of duty; paragraph 02 - instructions from authoritative source,nopd policy: chapter 42.4 - domestic violence,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+133,instructions from a supervisor or higher ranked staff member,"no call no show for duty on 8/21/20, 8/22/20 and 8/23/2020.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+134,rule 4: performance of duty; paragraph 04 - neglect of duty,policy # 400 - patrol operations; policy 402 - pr 402 - discriminatory policing-racial bias-based profiling,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+135,punctuality,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+136,code of conduct,allegee spraggins lied about her statement on crash report and had an racist attitude with her,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+137,failure to provide information to superior,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+138,"misuse of surveillance system camera - employee conduct - dr.03:08.000 d. each employee has an obligation to observe and follow the stpso policies and to maintain proper standards of conduct at all times as describe herein. if an individual's behavior interferes with the orderly and efficient operation of the agency, corrective disciplinary measures may be taken - group 2 - dr.03:09.932.01 - failure to follow supervsior instructions, perform assigned work or otherwise comply with policy and procedure - written warning",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+139,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 41.5 - vehicle pursuits, paragraph 34",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+140,"group 2 - dr.03:09.932.01 - failure to follow supervisor instructions, perform assigned work, or otherwise comply with policy and procedures - suspension 8 hours",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+141,associations,"accused of being in a relationship with convicted felon."" subject is on parole """,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+142,rule 6: official information; paragraph 04 - citizens report complaint,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+143,article 28,nan,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+144,neglect of duty,deputy hartford fail to activate his body camera for an incident #t000029320.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+145,rule 2: moral conduct; paragraph 01 - adherence to law,r.s. 14:43.1 relative to sexual battery,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+146,"group 3 - employee conduct, dr.03:08.000 - a. members of the stpso shall conduct themselves at all times, both on and off duty, in such a manner as to reflect most favorably on the agency. unbecoming conduct shall include that which brings the agency into disrepute or reflects discredi upon the individual as a member of the stpso, or that which impairs the operation or efficiency of the stpso or the individual. d. each employee has an obliation ot ovserve and follow the stpso policies and to maintain proper standards of condut at all times as described herein. if an individual's behavior interes with orderly and efficient operation tof the agency, corrective disciplinary measure may be taken. dr.03:09.955.01 f. taking any acition which will impair the efficieency or repuation of the agency, its members, or employees - dr.03:09.957.01 - failure to observe policy - willful disregard of agency rules, regulations,, policies or procedures - terminated",nan,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+147,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source; nopd policy 843.2 motion computer inquiries, instructions",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+148,rule 4: performance of duty; paragraph 02 - instructions from authoritative source,nopd policy: chapter 41.3.8 - in car camera,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+149,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 42.4 - domestic violence, paragraph 96",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+150,instructions from a supervisor or higher ranked staff,was observed to have parked in chief parking spot.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+151,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 82.8 - crime bulletins, paragraph 6, instructions",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+152,misuse of deputy equipment,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+153,failure to check building,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+154,neglect of duty/supervisory responsibilities,"accused of allowing three deputies to congregate inside the pod control, leaving the housing unit unmanned.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+155,neglect of duty-general,"deputy lena freeman refused her assignment, clocked out and left without permission.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+156,false arrest,alleges officers used excessive force and false arrest,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+157,neglect of duty,accused of leaving his opso hat and jacket in the presence of an inmate.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+158,instructions from a supervisor or higher ranked staff member,sergeant cannon instructed deputy r. barnaby to allowed inmate brandon butler out of his cell without any rank present.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+159,rule 4: performance of duty; paragraph 04 - neglect of duty,policy # 1000 - personnel; policy 1041 - secondary employment,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+160,carrying out order,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+161,neglect of duty,allowed an inmate to assist with inamte food pass.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+162,3:14 sexual harassment - 37,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+163,false arrest;rudeness,comp stated he was only arrested because he argued with ofc,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+164,neglect of duty,"failed to drive opso state truck # 1609 back to tdc parking lot, deputy thomas left the veehicle in a parking lot not owned by opso.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+165,clearance,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+166,neglect of duty-general,failed to activate his bwc during a uof incident on unit one.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0
+167,neglect of duty,did not have on body camera while conducting meal service.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+168,"gifts, gratuities, bribes, or rewards","gifts, gratuities, bribes, or rewards",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+169,code of conduct,alleges officer merriott arrested her without probable cause and for putting her daughters hair in ponytail without permession,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+170,failed to upload in,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+171,"dr.03:09.932.01 - insubordination - failure to follow supervisor instructions, perform assigned work, or otherwise comply with policy and procedures - dr.03:09.919 - failing to make a written report - suspension 24 hours",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+172,604.03 felony investigations,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+173,"dr.03:09.957.01 willful disregard of agency rules, regulations, policies or procedures as it relates to employee conduct. - demotion from lieutenant to sergeant & transfer to corrections.",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+174,"sop.0500:01.270.01 #12 - cursing, foul, slang, or abusive language - warning",nan,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+175,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source; nopd chapter 41.5 vehicle pursuits",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+176,dereliction of duty,ofc's failed to properly handle vehicle abandoned in traffic lane,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+177,wrongful termination,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+178,verbal warning - making decisions of employees time,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+179,truthfulness,deputy frazier was observed via cctv sitting at the deputies station with multiple offenders out at roll call.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+180,allowing escape,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+181,inmate supervision and relations - general,". it was reported to me that you hand delivered a note, written by you, to an female inmate incarcerated in the jefferson davis parish jail that detailed inappropriate behavior you wished to engage in with the inmate. this incident was corroborated by jail video.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+182,dr.03:08.230 - reporting absences - unscheduled absences must be reported to the immediate supervisor - warning,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+183,rule 2: moral conduct; paragraph 01 - adherence to law,r.s. 14:103 relative to disturbing the peace ( domestic),0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+184,neglect of duty,failed to complete mandatory training.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+185,dereliction of duty,jailer wrongfully released inmate before serving his mandatory sentence,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+186,dereliction of duty,complainant stated ofc refused to allow her to check on unattended child during traffic stop,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+187,rule 06: offical information; paragraph 04: citizens report complaint,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+188,excessive force,comp alleges unnecessary force and arrest,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+189,undetermined,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+190,"dr:03:09:916(b) inadequate or unsatisfactory job performance, dr:03:09:916 c unsatisfactory work or failure to maintain required standard of performance - 40 hour suspension",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+191,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 1.3.6 - reporting Force, paragraph 21",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+192,neglect of duty-general,on 12/23/2021 recruit johnson failed to return key 3-15 at the end of his shift.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+193,misuse of authority,nan,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+194,2:14: failure to secure property or evidence,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+195,physical intimidation,accused of choking an inmate.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+196,code of conduct,"alleges ofc grant profiled him because he has dark window tint, called him ""boy. and threatened to arrest him if he didn't sign a ticket""",0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+197,professionalism,fratinize with inmate.,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+198,cruelty to animals,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+199,dereliction of duty,"while working front desk, routinely fails to transfer phone calls into communicatin; instead gives the phone number to the caller and hangs up.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+200,rudeness/unprofessionalism,nan,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+201,absence without leave,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+202,professionalism,accused of placing monies on inmates accounts.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+203,carrying out orders / general orders (pursuit) 40,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+204,courage,"failed to assist with inmate clock down. based on video footage, employee was not in any violations.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+205,instructions from a supervisor or higher ranked staff member,did not return to orleans justice center when instructed.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+206,rule 01: operation manuals; paragraph 01: rules of procedures,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+207,"professionalism, truthfulness, instructions from a supervisor or higher ranked staff member, leaving assigned area",accused of taking a bag of chips that was left in the pod module.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0
+208,professionalism-sexual harassment,accused of harassign lieutenant blachard.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+209,"3,17 carrying out orders / general orders (pursuit) 40",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+210,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 82.8 - crime bulletins, paragraph 4 bulletin",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+211,illegal investigation,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+212,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source.13.29, para 6",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+213,instructions from supervisor or higher rank,was found not to have her finger nails regulation length.,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+214,rudeness,inmate stated jailer was rude toward him,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+215,care of property equipment,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+216,disobeying orders,no date completed or discipline in file,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+217,professionalism,accused of bringing contraband into orleans justice center facility.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+218,excessive force,alleges officers used excessive force on handcuffed suspect,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+219,neglect of duty-general,failed to submit a report following a physical altercation between 2 inmates on pod 2d.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+220,"relative to insubordination, by failing to submit the weapon after being advised - suspension (8 hours)",nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+221,code of conduct,alleges that officer took inappropriate investigative measures,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+222,performance of duty 01-01.10,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+223,abuse of sick leave - 66,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+224,use of drugs 01-01.23,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+225,complete report,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+226,2:8 damaging department equipment 18,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+227,rule 07: department property; paragraph 05: statement of responsibility,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+228,rule 2: moral conduct; paragraph 01 - adherence to law,r.s. 14: 134 relative to malfeasance in office (2),1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+229,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 -chapter 71.1, para 10: sub para (h)3",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+230,neglect of duty,failed to submit uof report within 36/72 hour time frame.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+231,devoting entire time to duty,"unprofessional conduct"" hand gesture the inmate that his penis was small""",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+232,missing money,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+233,violation of jail standards,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+234,instructions from a supervisor or higher ranked staff member,failed to do proper security check.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+235,neglect of duty,failed to keep rank informed.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+236,rule 4: performance of duty; paragraph 04 - neglect of duty,"paragraph c: subparagraph 6 - failing to comply with instructions, oral or written, from any authoritative source.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+237,reporting for duty and instructions from a supervisor or higher ranked staff member,sergeant chapman called off from work on 7/3/2021 and 7/4/2021 after being informed his annual time was denied.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+238,rule 4: performance of duty; paragraph 04 - neglect of duty,"nopd policy: chapter 41.3.10 - body-worn cameras, paragraph 28",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+239,Force continuum,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+240,code of conduct,alleges ofc baley harassed while investigation motor vehicle accident,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+241,rule 4: performance of duty; paragraph 04 - neglect of duty,nopd policy: chapter 41.5 - vehicle pursuits; paragraph 23 (a),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+242,instructions from a supervisor or higher ranked staff member,"failed to attend mandatory augusta 5, 2022 covid-19 testing.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+243,falsifying records,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+244,2:2 shirking duties - 14,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+245,truthfulness,was obsevered to have engaged in a video visitation session with an inmate housed in anohter parish and admitted to putting money on his account.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+246,procedures,accused of working an unauthoriez detail.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+247,respect fellow members,nan,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+248,306.01 duties & res,nan,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+249,mishandling of evidence,officer resigned prior to formal investigation was complete,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
