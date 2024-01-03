@@ -36,7 +36,7 @@ The process of cleaning the overview data includes ([see the code and analysis h
 3. Cleaning agency names more thoroughly
 
 ### Misconduct
-The process of cleaning the misconduct data includes (see the code and analysis here):
+The process of cleaning the misconduct data includes ([see the code and analysis here](https://github.com/aclu-national/JL_dashboard/blob/c57de852d5ce5509d5409c759b3b4a1d252a4bf2/scripts/misconduct_scripts/misconduct_data_cleaning.R)):
 1. Creating a full name variable in the LLEAD personnel data.
 2. Joining the LLEAD personnel data with the LLEAD History ID data via their unique identifiers.
 3. Renaming the repeated officer demographic variables.
