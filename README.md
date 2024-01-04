@@ -44,7 +44,7 @@ The process of cleaning the misconduct data includes ([see the code and analysis
 5. Categorizing the agencies.
 6. Cleaning the agency names.
 7. Using regex to categorize the dispositions and actions
-8. Using a multi-label classification model to categorize allegations (click here to see how we built this model). 
+8. Using a multi-label classification model to categorize allegations ([click here to see how we built this model](https://github.com/aclu-national/JL_dashboard/blob/cce003c05222bf8609552bcd951a0afe33cbbde4/scripts/misconduct_scripts/allegation_classification/classification_methodology.pdf)). 
 
 ## Data
 - Mapping Police Violence data: https://airtable.com/shroOenW19l1m3w0H/tblxearKzw8W7ViN8
