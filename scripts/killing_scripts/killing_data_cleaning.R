@@ -18,8 +18,12 @@ agency_locations <- read_csv(here::here(agency_locations_link))
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
-# Variable to write in the newest date the data was available
-newest_date = "2023-10-20"
+# Data last data available
+newest_date = "2024-01-11"
+
+# API key
+api_key = "8b0dc67a5d26f4d27b193904ac4ef087b0409b5e"
+
 
 # Filtering for Louisiana killings and cleaning
 la_killing <- killing_data %>%
@@ -59,8 +63,9 @@ la_killing <- killing_data %>%
          parish = ifelse(parish == "Acadiana", "Acadia", parish),
          parish = ifelse(city == "Monroe", "St. Tammany", parish)) %>%
   filter(!(name == "Omarr Jackson" & race == "White"))
+
 # Loading in census data
-census_api_key("8b0dc67a5d26f4d27b193904ac4ef087b0409b5e")
+census_api_key(api_key)
 vars_2020 <- load_variables(2020, "pl")
 
 # Filter census data for race
@@ -171,34 +176,47 @@ killing_rate_black <- 100000 * sum(la_killing$race == "Black", na.rm = TRUE)/sum
 killing_rate_white <- 100000 * sum(la_killing$race == "White", na.rm = TRUE)/sum(census_data$white_alone)
 killing_ratio_bw <- killing_rate_black/killing_rate_white
 killing_ratio_bw
+
 # Parishes with the most killings per hundred thousand total, black, and white residents
 parish_most_total_kill_rate <- killings_rate_demographics %>%
-  arrange(desc(total_kill_rate))
-
-parish_most_black_kill_rate <- killings_rate_demographics %>%
-  arrange(desc(black_kill_rate))
-
-parish_most_white_kill_rate <- killings_rate_demographics %>%
-  arrange(desc(white_kill_rate))
+  mutate(
+    ratio_bw = ifelse(is.na(ratio_bw) | is.infinite(ratio_bw), NA, ratio_bw),
+    total_kill_rate = paste0(round(total_kill_rate, 2), " People Killed per 100,000 Residents"),
+    black_kill_rate = paste0(round(black_kill_rate, 2), " Black People Killed per 100,000 Black Residents"),
+    white_kill_rate = paste0(round(white_kill_rate, 2), " White People Killed per 100,000 White Residents"),
+    ratio_bw = paste0(round(ratio_bw, 2), " Black People Killed per 100,000 Black Residents to 1 White Person Killed per 100,000 White Residents"),
+    ratio_bw = ifelse(ratio_bw %in% c("0 Black People Killed per 100,000 Black Residents to 1 White Person Killed per 100,000 White Residents",
+                    "NA Black People Killed per 100,000 Black Residents to 1 White Person Killed per 100,000 White Residents"),
+                     "", ratio_bw
+                     ),
+    black_kill_rate = ifelse(black_kill_rate == "0 Black People Killed per 100,000 Black Residents", "", black_kill_rate),
+    white_kill_rate = ifelse(white_kill_rate == "0 White People Killed per 100,000 White Residents", "", white_kill_rate)
+  )
 
 # Killings by parish and gender, race, and age
 gender_by_parish <- la_killing %>%
-  tabyl(parish, gender)
+  tabyl(parish, gender) %>%
+  mutate_all(~ ifelse(. == 0, "", .))
 
 age_by_parish <- la_killing %>%
-  tabyl(parish, age_category)
+  tabyl(parish, age_category) %>%
+  mutate_all(~ ifelse(. == 0, "", .))
 
 race_by_parish <- la_killing %>%
-  tabyl(parish, race)
+  tabyl(parish, race) %>%
+  mutate_all(~ ifelse(. == 0, "", .))
 
 # Number of months the data collection has occurred
 date1 <- as.Date("2013-01-01")
 date2 <- as.Date(newest_date) # Change for the newest update
 num_months <- interval(date1, date2) %/% months(1)
 num_months
+
 # Months without a police killing in Louisiana
 months_no_killing <- num_months - length(unique(format(as.Date(la_killing$date), "%Y-%m")))
 length(unique(format(as.Date(la_killing$date), "%Y-%m")))
+
+
 # Moving Timeline Killings per year by demographic
 race_killing_per_year <- la_killing %>%
   tabyl(year, race) %>%
@@ -206,8 +224,6 @@ race_killing_per_year <- la_killing %>%
   # Aggregating values
   mutate(across(Asian:White, cumsum)) %>%
   t()
-
-colnames(race_killing_per_year) <- NULL
 
 gender_killing_per_year <- la_killing %>%
   tabyl(year, gender) %>%
@@ -230,14 +246,16 @@ ave_age_killed_per_year <- la_killing %>%
   summarize(mean_age = mean(age, na.rm = TRUE))
 
 mean(as.numeric(la_killing$age), na.rm = TRUE)
-ave_age_killed_per_year
+
+
 # Armed Status Barchart
 arm_status_by_race <- la_killing %>%
   
   # Mutating "allegedly_armed" variable so that any allegation which includes "Allegedly" becomes "Allegedly Armed"
   mutate(allegedly_armed = ifelse(str_detect(allegedly_armed, "Allegedly"), "Allegedly Armed", allegedly_armed)) %>%
   tabyl(allegedly_armed, race) %>%
-  adorn_totals(where = "col")
+  adorn_totals(where = "col") %>%
+  select(allegedly_armed, "Total", "Black", "White", "Hispanic", "Asian", "Unknown Race")
 
 # Flee Status Barchart
 fleeing_status <- la_killing %>%
@@ -248,7 +266,8 @@ fleeing_status <- la_killing %>%
   # Creating a "fleeing" variable that defines not fleeing as if "wapo_flee" is empty or is "Not Fleeing"
   mutate(fleeing = if_else((is.na(wapo_flee) | wapo_flee == "Not Fleeing"), "Not Fleeing", "Fleeing")) %>%
   tabyl(race, fleeing) %>%
-  adorn_totals(where = "row")
+  adorn_totals(where = "row") %>%
+  arrange(desc('Not Fleeing'))
 
 # Percent of people allegedly fleeing
 pct_fleeing_status <- fleeing_status %>%
@@ -267,7 +286,7 @@ violent_crime_distribution <- la_killing %>%
                                 "Non-Violent Crime")) %>%
   tabyl(crime_status)
 
-violent_crime_distribution
+
 # Counting mental health status groups 
 mental_health <- la_killing %>%
   tabyl(signs_of_mental_illness)
@@ -285,9 +304,21 @@ killings_per_department <- la_killing %>%
   tabyl(agency_name, race) %>%
   adorn_totals(where = "col")
 
-killings_per_department %>%
-  arrange(desc(White)) %>%
+total_killing_per_dep <- killings_per_department %>%
+  arrange(desc(Total)) %>%
+  select(agency_name, Total) %>%
   head(5)
+
+black_killing_per_dep <- killings_per_department %>%
+  arrange(desc(Black)) %>%
+  select(agency_name, Black) %>%
+  head(5)
+
+white_killing_per_dep <- killings_per_department %>%
+  arrange(desc(White)) %>%
+  select(agency_name, White) %>%
+  head(5)
+
 
 # Police agencies represented
 departments_represented <- killings_per_department %>%
@@ -313,12 +344,36 @@ mapping_department_killings <- la_killing %>%
   
   # Making a single "latlong" variable
   unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
-  select("date", "latlong", "agency_responsible") %>%
+  select("date", "latlong", "agency_responsible", "agency_type") %>%
   arrange(date)
 
 
-toString(la_killing$name[1:25])
-
+# Mapping by type
+la_killing %>% 
+  
+  # Splitting agencies by comma and removing all unnecessary text from agency names
+  mutate(
+    agency_name = str_split(as.character(str_replace_all(agency_responsible, ", ", ",")), ","),
+    agency_name = map(agency_name, ~ str_remove_all(.x, '^"|"$|[()]')),
+    id = row_number()
+  ) %>%
+  unnest(agency_name) %>%
+  mutate(agency_type = case_when(
+    str_detect(tolower(agency_name), "university|college|campus") ~ "University or Campus Police",
+    str_detect(tolower(agency_name), "marshal") ~ "Marshal's Office",
+    str_detect(tolower(agency_name), "constable") ~ "Constable's Office",
+    str_detect(tolower(agency_name), "sheriff") ~ "Sheriff's Office",
+    str_detect(tolower(agency_name), "department|police department") ~ "Police Department",
+    TRUE ~ "Other Law Enforcement Agency"
+  )) %>%
+  group_by(id) %>%
+  summarize(agency_name = paste(agency_name, collapse = ", "),
+            agency_type = paste(agency_type, collapse = ", "),
+            latitude = unique(latitude),
+            longitude = unique(longitude),
+            date = unique(date)) %>%
+  unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
+  mutate(agency_type = ifelse(str_detect(agency_type, ","), "Multiple Types", agency_type))
 
 
 # Officers who killed people
@@ -338,7 +393,7 @@ officers_killing <- la_killing %>%
   drop_na(officers) %>%
   select(officer_date)
 
-officers_killing
+sum(!is.na(la_killing$officer_names))
 
 # Charge status distribution
 charge_status <- la_killing %>%
@@ -369,3 +424,26 @@ disposition_status <- la_killing %>%
     )
   ) %>%
   tabyl(disposition_fixed)
+
+
+pending_over_time <- la_killing %>%
+  mutate(
+    
+    # Making dispositions lowercase
+    disposition_official = tolower(disposition_official),
+    
+    # Creating disposition categories
+    disposition_fixed = case_when(
+      str_detect(disposition_official, "charged") ~ "Charged",
+      str_detect(disposition_official, "pending|under") ~ "Pending Investigation",
+      str_detect(disposition_official, "justified") ~ "Justified",
+      str_detect(disposition_official, "cleared") ~ "Cleared",
+      str_detect(disposition_official, "family awarded") ~ "Family Awarded Money",
+      str_detect(disposition_official, "unreported") ~ "Unreported",
+      disposition_official %in% c("unknown", NA) ~ "Unknown",
+      TRUE ~ disposition_official
+    )
+  ) %>%
+  filter(disposition_fixed == "Pending Investigation") %>%
+  tabyl(year)
+
