@@ -7,9 +7,9 @@ library(zoo)
 library(tidyverse)
 
 # Defining Links
-pd_sizes_link = "original_data/overview_original_data/pe_1960_2022.csv"
-agency_locations_link = "original_data/misconduct_original_data/data_agency-reference-list.csv"
-pd_references_link = "original_data/overview_original_data/ICPSR_35158/DS0001/35158-0001-Data.rda"
+pd_sizes_link = "data/overview_data/pe_1960_2022.csv"
+agency_locations_link = "data/misconduct_data/data_agency-reference-list.csv"
+pd_references_link = "data/overview_data/35158-0001-Data.rda"
 
 # Reading in data
 pd_sizes <- read_csv(here::here(pd_sizes_link))
@@ -22,31 +22,23 @@ pd_references <- da35158.0001
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
+# Renaming variables in the pd references
 pd_references <- pd_references %>%
   select(ORI9, NAME) %>%
   rename(ori = ORI9,
          agency_full_name = NAME)
 
 
-pd_references
-
-
-# Defining agency type key words
-constable <- c("constable")
-marshal <- c("marshal")
-police_department <- c("department", "police department")
-sheriff <- c("sheriff")
-university <- c("university", "college", "campus", "lsu", "uno", "usl", "ula", "lsuhc")
-
 # Defining the type of agency
 agency_locations <- agency_locations %>%
-  mutate(agency_type = ifelse(str_detect(tolower(agency_name), paste(university, collapse = "|")), "University or Campus Police",
-                              ifelse(str_detect(tolower(agency_name), paste(marshal, collapse = "|")), "Marshal's Office",
-                                     ifelse(str_detect(tolower(agency_name), paste(constable, collapse = "|")), "Constable's Office",
-                                            ifelse(str_detect(tolower(agency_name), paste(sheriff, collapse = "|")), "Sheriff's Office",
-                                                   ifelse(str_detect(tolower(agency_name), paste(police_department, collapse = "|")), "Police Department",
-                                                          "Other Law Enforcement Agency"
-                                                   ))))))
+  mutate(agency_type = case_when(
+    str_detect(tolower(agency_name), "university|college|campus") ~ "University or Campus Police",
+    str_detect(tolower(agency_name), "marshal") ~ "Marshal's Office",
+    str_detect(tolower(agency_name), "constable") ~ "Constable's Office",
+    str_detect(tolower(agency_name), "sheriff") ~ "Sheriff's Office",
+    str_detect(tolower(agency_name), "department|police department") ~ "Police Department",
+    TRUE ~ "Other Law Enforcement Agency"
+  ))
 
 # Connecting department references with police department sizes
 la_pd_sizes <- pd_sizes %>% 
@@ -57,9 +49,9 @@ la_pd_sizes <- pd_sizes %>%
          agency_name = str_replace(agency_name, "Dept|Dept.|Pd", "Police Department"),
          agency_name = str_remove(agency_name, "\\.$"))
 
-# Filtering data for just 2022
-la_pd_sizes_2022 <- la_pd_sizes %>%
-  filter(data_year == "2022")
+# Filtering data for just 2021
+la_pd_sizes_2021 <- la_pd_sizes %>%
+  filter(data_year == "2021")
 
 # ------------------------------------- Data Analysis Process ----------------------------------------------
 
@@ -88,13 +80,13 @@ officers_over_time <- la_pd_sizes %>%
             "total_pe_ct", "pe_ct_per_1000", "agency_full_name",
             "pub_agency_name")) %>%
   group_by(agency_name) %>%
-  fill(2:64, .direction = 'updown') %>%
+  fill(2:63, .direction = 'updown') %>%
   distinct(agency_name, .keep_all = TRUE) %>%
-  select(64:2) %>%
+  select(63:2) %>%
   arrange(agency_name)
 
 # Mapping average number of officers per agency
-average_agency_map <- la_pd_sizes_2022 %>% 
+average_agency_map <- la_pd_sizes_2021 %>% 
   separate_rows(county_name, sep = ", ") %>%
   group_by(county_name) %>%
   summarize(pct_per_county = mean(total_pe_ct)) %>%
