@@ -296,6 +296,21 @@ department_count <- misconduct %>%
   tabyl(agency_name) %>%
   arrange(desc(n))
 
+# Representation of total police departments in the data
+department_count_total <- agency_locations %>%
+  mutate(
+    agency_name = case_when(
+    agency_name == "New Orleans Parish Sheriff's Office" ~ "Orleans Parish Sheriff's Office",
+    agency_name == "Orleans Constable" ~ "Orleans Parish Constable",
+    agency_name == "Jefferson Constable" ~ "Jefferson Parish Constable",
+    TRUE ~ agency_name
+    )
+  ) %>% 
+  left_join(department_count, by = "agency_name") %>%
+  mutate(represented = ifelse(is.na(n), "Did Not Submit Misconduct Data", "Submit Misconduct Data"),
+         n = ifelse(is.na(n), "", n)) %>%
+  select(agency_name, n, represented, location)
+
 # Defining a function to get the percent reported 
 get_pct_var_reported <- function(group, variable) {
   misconduct %>%
@@ -309,12 +324,8 @@ get_pct_var_reported <- function(group, variable) {
 # % of agencies that reported race
 get_pct_var_reported(agency_name, race)
 
-
 # % of agencies that reported gender
 get_pct_var_reported(agency_name, sex)
-
-# % of officers whose names are included
-get_pct_var_reported(index, full_name)
 
 # % of allegations that have reported repercussions
 get_pct_var_reported(index, action)
@@ -331,6 +342,22 @@ incompleteness_score <- misconduct %>%
   summarize(score = mean(empty_count)) %>%
   mutate(score = rescale(-score)*100) %>%
   arrange(desc(score))
+
+incompleteness_score_head <- incompleteness_score %>%
+  arrange(desc(score)) %>% 
+  mutate(score = round(score,2)) %>%
+  head(10)
+
+incompleteness_score_tail <- incompleteness_score %>%
+  arrange(score) %>%
+  mutate(score = round(score,2))
+
+misconduct %>%
+  tabyl(agency_name) %>%
+  arrange(desc(n)) %>%
+  head(8) %>%
+  pull(n) %>%
+  sum()/n_misconduct
 
 # Number of officers by race 
 officer_race_count <- misconduct %>%
@@ -355,19 +382,19 @@ people_most_allegations <- misconduct %>%
 
 # Percent of officers who are male
 pct_officers_male <- officer_sex_count %>%
-  filter(sex == "Male") %>%
+  filter(sex == "male") %>%
   adorn_pct_formatting() %>%
   pull(valid_percent)
 
 # Percent of officers who are black
 pct_officers_black <- officer_race_count %>%
-  filter(race == "Black") %>%
+  filter(race == "black") %>%
   adorn_pct_formatting() %>%
   pull(valid_percent)
 
 # Percent of officers who are white
 pct_officers_white <- officer_race_count %>%
-  filter(race == "White") %>%
+  filter(race == "white") %>%
   adorn_pct_formatting() %>%
   pull(valid_percent)
 
@@ -419,9 +446,11 @@ sustain_status_by_allegation_percent <- allegation_disposition %>%
   adorn_percentages("col") %>%
   adorn_pct_formatting(digits = 2, affix_sign = FALSE)
 
+sustain_status_by_allegation_percent
+
 # Number of sustained per allegation type
 sustained_by_allegation <- allegation_disposition %>%
-  tabyl(allegation_split, disposition_split)
+  tabyl(disposition_split, allegation_split)
 
 
 # Distribution of internal repercussions by misconduct type
@@ -448,22 +477,49 @@ long_repercussion_by_allegation <- repercussion_by_allegation %>%
   summarize(allegation = allegation_split,
             repercussion = repercussion_split,
             count = count,
-            percent = count/sum(count))
+            percent = count/sum(count)) %>%
+  ungroup() %>%
+  select(allegation, repercussion, count, percent) %>%
+  mutate(percent = paste0(allegation, "/", repercussion, ": ", round(percent,2), "% (",count,")"))
 
-# Allegation types and count by police department
+df_list = list()
+for (allegations in unique(long_repercussion_by_allegation$allegation)) {
+  df <- filter(long_repercussion_by_allegation, allegation == allegations)
+  print(df)
+  df_list <- append(df_list, list(df))
+}
+
+library(openxlsx)
+
+write.xlsx(df_list, "df.xlsx")
+
+write.csv(long_repercussion_by_allegation, "it.csv")
+
+ # Allegation types and count by police department
 allegation_by_pd <- unnested_misconduct_allegation %>%
-  tabyl(agency_name, allegation_split) %>%
-  mutate(across(everything(), ~ifelse(. == "0", "", .)))
+  tabyl(allegation_split, agency_name) %>%
+  adorn_totals("col") %>%
+  select(allegation_split, Total, c("13th District Attorney's Office": "Zachary Police Department")) %>%
+  mutate(across(everything(), ~ifelse(. == "0", "", .))) %>%
+  arrange(desc(Total))
+
 
 # Disposition types and count by police department
 disposition_by_pd <- unnested_misconduct_disposition %>%
-  tabyl(agency_name, disposition_split) %>%
-  mutate(across(everything(), ~ifelse(. == "0", "", .)))
+  tabyl(disposition_split, agency_name) %>%
+  adorn_totals("col") %>%
+  select(disposition_split, Total, c("Abbeville Police Department": "Winnsboro Police Department")) %>%
+  mutate(across(everything(), ~ifelse(. == "0", "", .))) %>%
+  arrange(desc(Total))
 
 # Internal repercussion types and count by police department
 internal_repercussion_by_pd <- unnested_misconduct_repercussion %>%
-  tabyl(agency_name, repercussion_split) %>%
-  mutate(across(everything(), ~ifelse(. == "0", "", .)))
+  tabyl(repercussion_split, agency_name) %>%
+  adorn_totals("col") %>%
+  select(repercussion_split, Total, c("13th District Attorney's Office": "Winnsboro Police Department")) %>%
+  mutate(across(everything(), ~ifelse(. == "0", "", .))) %>%
+  arrange(desc(Total))
+
 
 # Outside repercussion types and count by police department
 outside_repercussion_by_pd <- unnested_misconduct_repercussion %>%
