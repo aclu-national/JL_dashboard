@@ -11,7 +11,6 @@ Louisiana is experiencing an epidemic of police violence that disproportionately
 JL_dashboard_shiny
 
 |-- app.R
-
 |-- rsconnect
 
 | |-- shinyapps.io
