@@ -14,9 +14,9 @@ JL_dashboard_shiny
 | |-- shinyapps.io
 | | |-- laaclu
 | | | |-- JL_dashboard_shiny.dcf
-README.md
-VPVL.Rproj
-data
+|-- README.md
+|-- VPVL.Rproj
+|-- data
 | |-- README.md
 | |-- killing_data
 | | |-- Mapping Police Violence.csv
@@ -29,17 +29,17 @@ data
 | | |-- 35158-0001-Codebook.pdf
 | | |-- 35158-0001-Data.rda
 | | |-- pe_1960_2022.csv
-image
+|-- image
 | |-- basic_git_structure.png
 | |-- gif2.gif
 | |-- gif3.gif
 | |-- visual.png
-reference_data
+|-- reference_data
 | |-- data_years.csv
 | |-- key_words.csv
 | |-- misconduct_agency_representation.csv
 | |-- represented.csv
-scripts
+|-- scripts
 | |-- killing_scripts
 | | |-- killing_data_cleaning.R
 | |-- misconduct_scripts
