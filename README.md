@@ -5,7 +5,13 @@ Git for the Justice Lab: Visualizing Police Violence in Louisiana dashboard. Thi
 
 
 ## Mission
-Louisiana is experiencing an epidemic of police violence that disproportionately impacts people of color. Our mission is to enhance public awareness and promote a deeper understanding of police misconduct in Louisiana. Through this interactive platform, we aim to inform the public about police violence incidents, including killings, by providing comprehensive data visualizations, with data sourced from Mapping Police Violence, the Louisiana Law Enforcement Accountability Database, the FBI Crime Data Explorer, and the 2020 U.S. Census.
+We built this dashboard as an interactive tool to empower interested citizens, nonprofit organizations, journalists, attorneys, academics, and even law enforcement agencies to explore and compare statewide policing statistics, uncover crucial insights and identify areas needing greater transparency.
+
+## Goals
+### 1. Enhancing Data Accessibility and Stewardship: Our mission is to offer seamless access to crucial policing statistics in Louisiana. Beyond presenting these statistics, we hope to empower users by providing access to the raw data, transforming them into custodians of this valuable information
+Amplifying Voices: This initiative serves as a powerful tool to magnify the experiences of individuals who have faced police violence and their families. Through a combination of data and narratives, we hope to bring attention to and amplify the stories of those affected by violence.
+Ensuring Accountability: We are committed to holding the police accountable for their actions. This involves representing instances of violence against the community and ensuring that individuals have transparent access to information about violent departments and officers.
+
 
 ## Git Structure
 
