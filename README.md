@@ -8,6 +8,54 @@ Git for the Justice Lab: Visualizing Police Violence in Louisiana dashboard. Thi
 Louisiana is experiencing an epidemic of police violence that disproportionately impacts people of color. Our mission is to enhance public awareness and promote a deeper understanding of police misconduct in Louisiana. Through this interactive platform, we aim to inform the public about police violence incidents, including killings, by providing comprehensive data visualizations, with data sourced from Mapping Police Violence, the Louisiana Law Enforcement Accountability Database, the FBI Crime Data Explorer, and the 2020 U.S. Census.
 
 ## Basic Git Structure
+JL_dashboard_shiny
+   |-- app.R
+   |-- rsconnect
+   |   |-- shinyapps.io
+   |   |   |-- laaclu
+   |   |   |   |-- JL_dashboard_shiny.dcf
+README.md
+VPVL.Rproj
+data
+   |-- README.md
+   |-- killing_data
+   |   |-- Mapping Police Violence.csv
+   |-- misconduct_data
+   |   |-- data_agency-reference-list.csv
+   |   |-- data_allegation.csv
+   |   |-- data_personnel.csv
+   |   |-- data_post-officer-history.csv
+   |-- overview_data
+   |   |-- 35158-0001-Codebook.pdf
+   |   |-- 35158-0001-Data.rda
+   |   |-- pe_1960_2022.csv
+image
+   |-- basic_git_structure.png
+   |-- gif2.gif
+   |-- gif3.gif
+   |-- visual.png
+reference_data
+   |-- data_years.csv
+   |-- key_words.csv
+   |-- misconduct_agency_representation.csv
+   |-- represented.csv
+scripts
+   |-- killing_scripts
+   |   |-- killing_data_cleaning.R
+   |-- misconduct_scripts
+   |   |-- allegation_classification
+   |   |   |-- GSDMM.py
+   |   |   |-- classification_methodology.pdf
+   |   |   |-- data_and_predictions
+   |   |   |   |-- labelled_data.csv
+   |   |   |   |-- rf_predictions.csv
+   |   |   |   |-- svm_predictions.csv
+   |   |   |   |-- test_for_predictions.csv
+   |   |   |-- fitting_allegation_models.R
+   |   |   |-- multilabel.py
+   |   |-- misconduct_data_cleaning.R
+   |-- overview_scripts
+   |   |-- overview_data_cleaning.R
 <img src = https://github.com/aclu-national/JL_dashboard/blob/dba9941b92bded06f02b65751e41728554196290/image/basic_git_structure.png >
 
 ## Sources
