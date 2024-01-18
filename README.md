@@ -1,7 +1,7 @@
 # Visualizing Police Violence in Louisiana
 Git for the Justice Lab: Visualizing Police Violence in Louisiana dashboard. This Git includes documentation, data, and scripts used to build this project, as well as all other work associated with the project.
 
-![](https://github.com/aclu-national/JL_dashboard_test/blob/5fb143d94fee0b7fe4d89056d5d935d4730243b4/image/gif2.gif)
+![](https://github.com/aclu-national/JL_dashboard_test/blob/5fb143d94fee0b7fe4d89056d5d935d4730243b4/image/gif3.gif)
 
 
 ## Mission
