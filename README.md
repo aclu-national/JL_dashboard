@@ -10,7 +10,7 @@ Louisiana is experiencing an epidemic of police violence that disproportionately
 ## Basic Git Structure
 JL_dashboard_shiny
 
-|-- app.R
+|-- app.R  
 |-- rsconnect
 
 | |-- shinyapps.io
