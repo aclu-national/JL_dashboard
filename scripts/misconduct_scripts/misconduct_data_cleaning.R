@@ -26,25 +26,21 @@ repercussion_classifier <- function(df){
       "Resigned" = str_detect(action, "quit|resign|resgined|retired"),
       "Decertified" = str_detect(action, "decertified|decertification"),
       "Suspended" = str_detect(action, "suspension|suspen"),
-      "Warned" = str_detect(action, "admonished|verbal conference|write-up|letter|written|warn|caution|talked to about"),
-      "Reprimanded" = str_detect(action, "repremand|reprimad|reprimand"),
-      "Investigated" = str_detect(action, "investigation"),
+      "Warned" = str_detect(action, "verbal conference|write-up|letter|written|warn|caution|talked to about"),
+      "Reprimanded" = str_detect(action, "admonished|repremand|reprimad|reprimand"),
       "Transferred" = str_detect(action, "transfer"),
       "Trained" = str_detect(action, "train|school|course|class|intervention|diversity"),
-      "Referred" = str_detect(action, "referred"),
       "Counseled" = str_detect(action, "counsel"),
       "Demoted" = str_detect(action, "demot"),
-      "Pending" = str_detect(action, "pend"),
-      "Evaluated" = str_detect(action, "evaluation"),
-      "DM-1" = str_detect(action, "dm-l|dm1|dm-1"),
-      "Pay Reduced" = str_detect(action, "pay|without pay|reduction|deducted"),
-      "No Repercussion" = str_detect(action, "none|no action|life lesson learned from experience|no discipline"),
       "Lost Privileges" = str_detect(action, "loss unit|loss of|unit privileges|vehicle|loss take home unit|exduty loss"),
-      "No Consequence" = str_detect(action, "non-sustained|exonerated|dismissed|not sustained|withdrawn|dismissed|justified|cleared|unfounded|unfounded|no criminal|cooperate"),
+      "Pending Repercussion" = str_detect(action, "pend"),
+      "No Consequence" = str_detect(action, "none|no action|life lesson learned from experience|no discipline"),
+      "Pay Reduced" = str_detect(action, "pay|without pay|reduction|deducted"),
+      "Investigated" = str_detect(action, "investigation"),
       "No Repercussion Reported" = is.na(action)
     ) %>%
     mutate("Miscellaneous Repercussion" = ifelse(
-      `No Repercussion Reported` == FALSE & rowSums(select(., "Terminated":"No Consequence"), na.rm = TRUE) == 0,
+      `No Repercussion Reported` == FALSE & rowSums(select(., "Terminated":"No Repercussion Reported"), na.rm = TRUE) == 0,
       TRUE,
       FALSE
     )) %>%
@@ -55,33 +51,21 @@ repercussion_classifier <- function(df){
 disposition_classifier <- function(df){
   df %>%
     mutate(
-      "Sustained" = disposition %in% c("at fault", "not sustained; sustained", "sustained; dui", "sustained; deceased", "sustained; retired under investigation", "sustained", "sustained; resigned while under investigation", "sustained; resigned", "sustained; dismissed"),
-      "No Investigation Merited" = disposition %in% c("no further investigation merited", "no investigation merited"),
+      "Sustained" = disposition %in% c("at fault", "not sustained; sustained", "sustained; dui", "sustained; deceased", "sustained; retired under investigation", "sustained", "sustained; resigned while under investigation", "sustained; resigned", "sustained; dismissed", "founded", "founded/preventable class 2", "founded reduced to letter"),
       "Unfounded" = str_detect(disposition, "unfounded|unsubstantiated"),
       "Not Sustained" = disposition %in% c("federal civil rights suit dismissed by court drug charges against complainant dismissed by district attorney", "cleared of any wrongdoing involing the incident", "no criminal or administrative violation", "no fault", "unsubstantiat", "non sustained", "cleared", "cleared of any wrongdoing", "un-substantiated", "no violations observed", "not sustained; rui", "terminated all charges", "not sustained", "non-sustained", "unsustained", "insufficient evidence to sustain"),
-      "Exonerated" = disposition == "exonerated",
-      "Pending Investigation" = str_detect(disposition, "pending"),
-      "Admin Review" = disposition == "admin review",
-      "Invalid Complaint" = disposition == "invalid complaint",
-      "Founded" = disposition %in% c("founded", "founded/preventable class 2", "founded reduced to letter"),
       "Withdrawn" = str_detect(disposition, "withdraw|withdrew"),
       "Settlement Negotiated" = str_detect(disposition, "negotiate|settlement"),
-      "Hearing" = disposition %in% c("pre-disciplinary hearing", "pre-termination hearing", "awaiting hearing"),
-      "Convicted" = disposition == "convicted",
-      "Active Investigation" = disposition %in% c("office investigation", "active"),
-      "Repercussion" = str_detect(disposition, "resign|suspend|suspension|reprimand|transfer") | disposition %in% c("terminated; write up attached", "termination", "terminated; arrested; pled guilty to simple battery on 6/1/2021 in criminal court"),
+      "No Investigation Merited" = disposition %in% c("no further investigation merited", "no investigation merited"),
+      "Pending Investigation" = str_detect(disposition, "pending"),
+      "Repercussion" = str_detect(disposition, "resign|suspend|suspension|reprimand|transfer|convicted") | disposition %in% c("terminated; write up attached", "termination", "terminated; arrested; pled guilty to simple battery on 6/1/2021 in criminal court"),
+      "Exonerated" = disposition == "exonerated",
+      "Admin Review" = disposition == "admin review",
       "Cancelled" = disposition %in% c("cancelled", "abandoned"),
-      "Inconclusive" = disposition == "inconclusive",
-      "Duplicate Allegation" = disposition %in% c("duplicate allegation", "duplicate investigation"),
-      "Justified" = str_detect(disposition, "justif"),
-      "Investigation Terminated" = disposition == "investigation terminated",
-      "Partially Sustained" = disposition == "partially sustained",
-      "DI-2" = str_detect(disposition, "di-2"),
-      "Administratively Closed" = disposition == "administrative closed",
       "No Disposition Reported" = is.na(disposition)
     ) %>%
     mutate("Miscellaneous Disposition" = ifelse(
-      `No Disposition Reported` == FALSE & rowSums(select(., "Sustained":"Administratively Closed"), na.rm = TRUE) == 0,
+      `No Disposition Reported` == FALSE & rowSums(select(., "Sustained":"Cancelled"), na.rm = TRUE) == 0,
       TRUE,
       FALSE
     )) %>%
@@ -532,3 +516,23 @@ outside_repercussion_by_pd <- unnested_misconduct_repercussion %>%
 # Defining the unique allegation types
 unique_allegations <- allegation_distribution %>%
   pull(allegation_split)
+
+
+# Plotting confusion matrices
+allegation_confusion <- total_misconduct %>%
+  select("Neglect of Duty":"Miscellaneous Allegation") %>%
+  as.matrix() %>%
+  crossprod() %>%
+  as.data.frame()
+
+disposition_confusion <- total_misconduct %>%
+  select("Sustained":"Miscellaneous Disposition") %>%
+  as.matrix() %>%
+  crossprod() %>%
+  as.data.frame()
+
+repercussion_confusion <- total_misconduct %>%
+  select("Terminated":"Miscellaneous Repercussion") %>%
+  as.matrix() %>%
+  crossprod() %>%
+  as.data.frame()
