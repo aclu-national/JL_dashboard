@@ -50,8 +50,8 @@ la_pd_sizes <- pd_sizes %>%
          agency_name = str_remove(agency_name, "\\.$"))
 
 # Filtering data for just 2021
-la_pd_sizes_2021 <- la_pd_sizes %>%
-  filter(data_year == "2021")
+la_pd_sizes_2022 <- la_pd_sizes %>%
+  filter(data_year == "2022")
 
 # ------------------------------------- Data Analysis Process ----------------------------------------------
 
@@ -86,7 +86,7 @@ officers_over_time <- la_pd_sizes %>%
   arrange(agency_name)
 
 # Mapping average number of officers per agency
-average_agency_map <- la_pd_sizes_2021 %>% 
+average_agency_map <- la_pd_sizes_2022 %>% 
   separate_rows(county_name, sep = ", ") %>%
   group_by(county_name) %>%
   summarize(pct_per_county = mean(total_pe_ct)) %>%
