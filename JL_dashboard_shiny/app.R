@@ -263,7 +263,7 @@ server <- function(input, output, session) {
   # Reactive expression for the second app
   filtered_df_2 <- reactive({
     df_killing %>%
-      filter(str_detect(agency_responsible, paste(input$selection2, collapse = "|"))) %>%
+      filter(if (paste(input$selection2, collapse = "|") != "") str_detect(agency_responsible, paste(input$selection2, collapse = "|")) else FALSE) %>%
       filter(if (input$parish != "All") parish %in% input$parish else TRUE) %>%
       filter(if (input$armed != "All") allegedly_armed %in% input$armed else TRUE) %>%
       filter(if (input$flee != "All") wapo_flee %in% input$flee else TRUE) %>%
