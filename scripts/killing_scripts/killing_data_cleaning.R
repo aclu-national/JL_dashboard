@@ -6,9 +6,13 @@ library(lubridate)
 library(tidycensus)
 library(tidyverse)
 library(zoo)
+library(clipr)
+
+# Date of updated data
+newest_date = "2024-03-25"
 
 # Defining Links
-killing_data_link <- "data/killing_data/Mapping Police Violence.csv"
+killing_data_link <- paste0("data/killing_data/",newest_date,"/Mapping Police Violence.csv")
 agency_locations_link <- "data/misconduct_data/data_agency-reference-list.csv"
 
 # Reading in data
@@ -18,12 +22,8 @@ agency_locations <- read_csv(here::here(agency_locations_link))
 
 # ------------------------------------- Cleaning Data Process ----------------------------------------------
 
-# Data last data available
-newest_date = "2024-01-11"
-
 # API key
 api_key = "8b0dc67a5d26f4d27b193904ac4ef087b0409b5e"
-
 
 # Filtering for Louisiana killings and cleaning
 la_killing <- killing_data %>%
@@ -114,7 +114,6 @@ census_data <- get_decennial(geography = "county", variables = v, year = "2020",
 killings_per_parish <- la_killing %>%
   tabyl(parish) %>%
   mutate(n = ifelse(n == 1, paste0(n, " Person Killed"), paste0(n, " People Killed")))
-  
 
 # Description of deaths in each parish
 description_data <- la_killing %>%
@@ -123,15 +122,18 @@ description_data <- la_killing %>%
 
 # Group by race
 demographic_race <- la_killing %>%
-  tabyl(race)
+  tabyl(race) %>%
+  arrange(desc(n))
 
 # Group by gender 
 demographic_gender <- la_killing %>%
-  tabyl(gender)
+  tabyl(gender) %>%
+  arrange(desc(n))
 
 # Group by age category
 demographic_age <- la_killing %>%
-  tabyl(age_category)
+  tabyl(age_category) %>%
+  arrange(desc(age_category))
 
 # Percent of people killed who were black 
 percent_killed_black <- demographic_race %>%
@@ -193,6 +195,32 @@ parish_most_total_kill_rate <- killings_rate_demographics %>%
     white_kill_rate = ifelse(white_kill_rate == "0 White People Killed per 100,000 White Residents", "", white_kill_rate)
   )
 
+# Total rate map
+total_parish_kill_rate <- parish_most_total_kill_rate %>%
+  select(parish,total_kill_rate)
+
+# Black rate map
+black_parish_kill_rate <- parish_most_total_kill_rate %>%
+  select(parish,black_kill_rate) %>%
+  filter(black_kill_rate != "")
+
+# White rate map
+white_parish_kill_rate <- parish_most_total_kill_rate %>%
+  select(parish,white_kill_rate) %>%
+  filter(white_kill_rate != "")
+
+# Ratio map
+ratio_bw_parish_kill_rate <- parish_most_total_kill_rate %>%
+  select(parish,ratio_bw) %>%
+  filter(ratio_bw != "")
+
+# Top 5
+highest_kill_rate <- killings_rate_demographics %>%
+  arrange(desc(total_kill_rate)) %>%
+  select(parish,total_kill_rate) %>%
+  mutate(total_kill_rate = round(total_kill_rate,2)) %>%
+  head(5)
+
 # Killings by parish and gender, race, and age
 gender_by_parish <- la_killing %>%
   tabyl(parish, gender) %>%
@@ -245,8 +273,6 @@ ave_age_killed_per_year <- la_killing %>%
   group_by(year) %>%
   summarize(mean_age = mean(age, na.rm = TRUE))
 
-mean(as.numeric(la_killing$age), na.rm = TRUE)
-
 
 # Armed Status Barchart
 arm_status_by_race <- la_killing %>%
@@ -267,7 +293,8 @@ fleeing_status <- la_killing %>%
   mutate(fleeing = if_else((is.na(wapo_flee) | wapo_flee == "Not Fleeing"), "Not Fleeing", "Fleeing")) %>%
   tabyl(race, fleeing) %>%
   adorn_totals(where = "row") %>%
-  arrange(desc('Not Fleeing'))
+  arrange(desc('Not Fleeing')) %>%
+  arrange(desc(Fleeing))
 
 # Percent of people allegedly fleeing
 pct_fleeing_status <- fleeing_status %>%
@@ -291,7 +318,6 @@ violent_crime_distribution <- la_killing %>%
 mental_health <- la_killing %>%
   tabyl(signs_of_mental_illness)
 
-
 # Police Department Graphs
 killings_per_department <- la_killing %>% 
   
@@ -301,24 +327,43 @@ killings_per_department <- la_killing %>%
     agency_name = map(agency_name, ~ str_remove_all(.x, '^"|"$|[()]'))
   ) %>%
   unnest(agency_name) %>%
+  mutate(
+    agency_name = case_when(
+      agency_name == "Caddo County Sheriff's Office" ~ "Caddo Parish Sheriff's Office",
+      agency_name == "Calcasieu Parish Sheriff’s Office" ~ "Calcasieu Parish Sheriff's Office",
+      agency_name == "East Baton Rouge Sheriff's Office" ~ "East Baton Rouge Parish Sheriff's Office",
+      agency_name == "Hourma Police Department" ~ "Houma Police Department",
+      agency_name == "Arcadia Parish Sheriff's Office" ~ "Acadia Parish Sheriff's Office",
+      agency_name == "Jefferson Parish Police Department" ~ "Jefferson Parish Sheriff's Office",
+      agency_name == "St. John the Baptist Parish Sheriff's Office" ~ "St. John Parish Sheriff's Office",
+      agency_name == "Tangipahoa Parish Sheriff’s Office" ~ "Tangipahoa Parish Sheriff's Office",
+      agency_name %in% c("Tangipahoa Parish Sheriff’s Office", "Tangipahoa Sheriff's Department") ~ "Tangipahoa Parish Sheriff's Office",
+      agency_name == "Terrebonne Parish Sheriff's Department" ~ "Terrebonne Parish Sheriff's Office",
+      agency_name == "U.S. Bureau of Investigation" ~ "U.S. Federal Bureau of Investigation",
+      agency_name == "US Marshals" ~ "U.S. Marshals Service",
+      TRUE ~ agency_name
+    )
+  ) %>%
   tabyl(agency_name, race) %>%
   adorn_totals(where = "col")
 
+# Dep rate total
 total_killing_per_dep <- killings_per_department %>%
   arrange(desc(Total)) %>%
   select(agency_name, Total) %>%
   head(5)
 
+# Dep rate black
 black_killing_per_dep <- killings_per_department %>%
   arrange(desc(Black)) %>%
   select(agency_name, Black) %>%
   head(5)
 
+# Dep rate white
 white_killing_per_dep <- killings_per_department %>%
   arrange(desc(White)) %>%
   select(agency_name, White) %>%
   head(5)
-
 
 # Police agencies represented
 departments_represented <- killings_per_department %>%
@@ -339,17 +384,29 @@ departments_represented <- killings_per_department %>%
                               "Not Represented in the Killing Data", 
                               "Represented in the Killing Data"))
 
-# Mapping
+# Base Map
 mapping_department_killings <- la_killing %>%
   
   # Making a single "latlong" variable
   unite(latlong, c(latitude, longitude), sep = " ", remove = F) %>%
-  select("date", "latlong", "agency_responsible", "agency_type") %>%
+  select("date", "latlong", "agency_responsible") %>%
   arrange(date)
+
+# Map to copy
+map <- data.frame(
+  title = mapping_department_killings$agency_responsible,
+  value = 1,
+  group = "",
+  coordinates = mapping_department_killings$latlong,
+  label = mapping_department_killings$agency_responsible,
+  start_date = mapping_department_killings$date,
+  end_date = "",
+  text = mapping_department_killings$date
+)
 
 
 # Mapping by type
-la_killing %>% 
+type_map <- la_killing %>% 
   
   # Splitting agencies by comma and removing all unnecessary text from agency names
   mutate(
@@ -387,11 +444,11 @@ officers_killing <- la_killing %>%
   unnest(officers) %>%
   
   # Including the date the killing occured with the name
-  mutate(officer_date = paste0(officers, ", " , date)) %>%
+  #mutate(officer_date = paste0(officers, ", " , date)) %>%
   
   # Removing officers who are not named
   drop_na(officers) %>%
-  select(officer_date)
+  select(officers)
 
 sum(!is.na(la_killing$officer_names))
 
@@ -423,9 +480,10 @@ disposition_status <- la_killing %>%
       TRUE ~ disposition_official
     )
   ) %>%
-  tabyl(disposition_fixed)
+  tabyl(disposition_fixed) %>%
+  arrange(desc(n))
 
-
+# Pending distribution per year 
 pending_over_time <- la_killing %>%
   mutate(
     
@@ -446,4 +504,3 @@ pending_over_time <- la_killing %>%
   ) %>%
   filter(disposition_fixed == "Pending Investigation") %>%
   tabyl(year)
-
