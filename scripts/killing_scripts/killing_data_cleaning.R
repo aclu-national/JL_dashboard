@@ -7,13 +7,15 @@ library(tidycensus)
 library(tidyverse)
 library(zoo)
 library(clipr)
+library(googlesheets4)
 
 # Date of updated data
-newest_date = "2024-03-25"
+newest_date = "2024-09-05"
 
 # Defining Links
 killing_data_link <- paste0("data/killing_data/",newest_date,"/Mapping Police Violence.csv")
 agency_locations_link <- "data/misconduct_data/data_agency-reference-list.csv"
+spreadsheet_link <- "https://docs.google.com/spreadsheets/d/1JqIciETWVy4mOw16ZHNGLFPd53APcGUYUZnFhstkUbs/edit?gid=0#gid=0"
 
 # Reading in data
 killing_data <- read_csv(here::here(killing_data_link))
@@ -110,15 +112,19 @@ census_data <- get_decennial(geography = "county", variables = v, year = "2020",
 
 # ------------------------------------- Data Analysis Process ----------------------------------------------
 
+n_killing <- nrow(la_killing)
+
 # Number of killings per parish
 killings_per_parish <- la_killing %>%
   tabyl(parish) %>%
-  mutate(n = ifelse(n == 1, paste0(n, " Person Killed"), paste0(n, " People Killed")))
+  mutate(n = ifelse(n == 1, paste0(n, " Person Killed"), paste0(n, " People Killed"))) %>%
+  select(-percent)
+
 
 # Description of deaths in each parish
 description_data <- la_killing %>%
-  select(parish, name, age, description = circumstances) %>%
-  unite(name_age, c(name, age), sep = ", ")
+  select(Parish = parish, name, age, Description = circumstances) %>%
+  unite(Name, c(name, age), sep = ", ")
 
 # Group by race
 demographic_race <- la_killing %>%
@@ -170,7 +176,8 @@ killings_rate_demographics <- la_killing %>%
          ratio_bw = black_kill_rate / white_kill_rate) %>%
   
   # Selecting variables to keep
-  select(parish, total_kill_rate, black_kill_rate, white_kill_rate, ratio_bw)
+  select(parish, total_kill_rate, black_kill_rate, white_kill_rate, ratio_bw) %>%
+  mutate(ratio_bw = ifelse(ratio_bw == Inf, NA, ratio_bw))
 
 # Killings for every hundred thousand residents by demographic
 killing_rate_total <- 100000 * nrow(la_killing)/sum(census_data$total)
@@ -238,34 +245,37 @@ race_by_parish <- la_killing %>%
 date1 <- as.Date("2013-01-01")
 date2 <- as.Date(newest_date) # Change for the newest update
 num_months <- interval(date1, date2) %/% months(1)
-num_months
+
 
 # Months without a police killing in Louisiana
 months_no_killing <- num_months - length(unique(format(as.Date(la_killing$date), "%Y-%m")))
-length(unique(format(as.Date(la_killing$date), "%Y-%m")))
+months_killing <- length(unique(format(as.Date(la_killing$date), "%Y-%m")))
 
 
 # Moving Timeline Killings per year by demographic
 race_killing_per_year <- la_killing %>%
   tabyl(year, race) %>%
-  
-  # Aggregating values
   mutate(across(Asian:White, cumsum)) %>%
-  t()
+  t() %>% 
+  as.data.frame() %>% 
+  row_to_names(1) %>% 
+  rownames_to_column(var = "race")
 
 gender_killing_per_year <- la_killing %>%
   tabyl(year, gender) %>%
-  
-  # Aggregating values
   mutate(across(Female:Male, cumsum)) %>%
-  t()
+  t() %>% 
+  as.data.frame() %>% 
+  row_to_names(1) %>% 
+  rownames_to_column(var = "gender")
 
 age_killing_per_year <- la_killing %>%
   tabyl(year, age_category) %>%
-  
-  # Aggregating values
   mutate(across(`<18`:`55+`, cumsum)) %>%
-  t()
+  t() %>%
+  as.data.frame() %>% 
+  row_to_names(1) %>% 
+  rownames_to_column(var = "age")
 
 # Average age killed
 ave_age_killed_per_year <- la_killing %>%
@@ -281,7 +291,8 @@ arm_status_by_race <- la_killing %>%
   mutate(allegedly_armed = ifelse(str_detect(allegedly_armed, "Allegedly"), "Allegedly Armed", allegedly_armed)) %>%
   tabyl(allegedly_armed, race) %>%
   adorn_totals(where = "col") %>%
-  select(allegedly_armed, "Total", "Black", "White", "Hispanic", "Asian", "Unknown Race")
+  select(allegedly_armed, "Total", "Black", "White", "Hispanic", "Asian", "Unknown Race") %>%
+  mutate_all(~ ifelse(. == 0, "", .))
 
 # Flee Status Barchart
 fleeing_status <- la_killing %>%
@@ -316,7 +327,20 @@ violent_crime_distribution <- la_killing %>%
 
 # Counting mental health status groups 
 mental_health <- la_killing %>%
-  tabyl(signs_of_mental_illness)
+  mutate(
+    signs_of_mental_illness = case_when(
+      signs_of_mental_illness == "Drug or Alcohol Use" ~ "Allegedly Using Drugs or Alcohol When Killed",
+      signs_of_mental_illness == "No" ~ "Did Not Show Symptoms of Mental Illness",
+      signs_of_mental_illness == "Yes" ~ "Showed Symptoms of Mental Illness",
+      signs_of_mental_illness %in% c("Unknown", NA) ~ "Unknown"
+    )
+  ) %>%
+  tabyl(signs_of_mental_illness) %>%
+  select(-percent)
+
+n_mental_illness = sum(la_killing$signs_of_mental_illness == "Yes", na.rm = TRUE)
+n_drug = sum(la_killing$signs_of_mental_illness == "Drug or Alcohol Use", na.rm = TRUE)
+
 
 # Police Department Graphs
 killings_per_department <- la_killing %>% 
@@ -448,9 +472,11 @@ officers_killing <- la_killing %>%
   
   # Removing officers who are not named
   drop_na(officers) %>%
-  select(officers)
+  select(officers) %>%
+  mutate(value = 1)
+  
 
-sum(!is.na(la_killing$officer_names))
+officer_name = sum(!is.na(la_killing$officer_names))
 
 # Charge status distribution
 charge_status <- la_killing %>%
@@ -481,7 +507,8 @@ disposition_status <- la_killing %>%
     )
   ) %>%
   tabyl(disposition_fixed) %>%
-  arrange(desc(n))
+  arrange(desc(n)) %>%
+  select(-percent)
 
 # Pending distribution per year 
 pending_over_time <- la_killing %>%
@@ -503,4 +530,144 @@ pending_over_time <- la_killing %>%
     )
   ) %>%
   filter(disposition_fixed == "Pending Investigation") %>%
-  tabyl(year)
+  tabyl(year) %>%
+  select(-percent)
+
+pending_before_2018 = sum(filter(pending_over_time, year <= 2018)$n)/sum(pending_over_time$n)
+
+
+# --------------------- Pushing the data to a spreadsheet ------------------
+
+facts <- data.frame(
+  variables = c(
+    "Average Age Killed",
+    "Rate of Black People Killed",
+    "Rate of Total People Killed",
+    "Rate of White People Killed",
+    "Ratio of Black to White People Killed",
+    "Months with No Police Killing",
+    "Percent of people killed who are Black",
+    "Percent of people killed who are male",
+    "Percent of of Louisiana that is black",
+    "Number of People Killed",
+    "Number of Months",
+    "Number of Months with Killing",
+    "Mental Illness",
+    "Drug",
+    "Officers Named",
+    "Pending before 2018"
+  ),
+  
+  
+  values = c(
+    average_age_killed,
+    killing_rate_black,
+    killing_rate_total,
+    killing_rate_white,
+    killing_ratio_bw,
+    months_no_killing,
+    percent_killed_black,
+    percent_killed_male,
+    percent_la_black,
+    n_killing,
+    num_months,
+    months_killing,
+    n_mental_illness,
+    n_drug,
+    officer_name,
+    pending_before_2018
+  )
+
+)
+
+# Defining sheets for the spreadsheet
+sheets <- c(
+  "Killings per Parish", 
+  "Description Data", 
+  "Demographic Race", 
+  "Demographic Gender", 
+  "Demographic Age", 
+  "Killings Rate by Demographics", 
+  "Parish with Most Total Kill Rate", 
+  "Total Parish Kill Rate", 
+  "Black Parish Kill Rate", 
+  "White Parish Kill Rate", 
+  "Ratio of Black to White Parish Kill Rate", 
+  "Highest Kill Rate", 
+  "Gender by Parish", 
+  "Race by Parish", 
+  "Age by Parish", 
+  "Race Killings per Year", 
+  "Gender Killings per Year", 
+  "Age Killings per Year", 
+  "Average Age Killed per Year", 
+  "Armed Status by Race", 
+  "Fleeing Status", 
+  "Percentage Fleeing Status", 
+  "Violent Crime Distribution", 
+  "Mental Health",
+  "Killings per Department", 
+  "Total Killings per Department", 
+  "Black Killings per Department", 
+  "White Killings per Department", 
+  "Departments Represented", 
+  "Mapping Department Killings", 
+  "Map",
+  "Type Map", 
+  "Officers Involved in Killings", 
+  "Charge Status", 
+  "Disposition Status", 
+  "Pending Cases Over Time", 
+  "Facts"
+)
+
+# Defining sheet values
+data_frames = list(
+  killings_per_parish,
+                   description_data,
+                   demographic_race,
+                   demographic_gender,
+                   demographic_age,
+                   killings_rate_demographics,
+                   parish_most_total_kill_rate,
+                   total_parish_kill_rate,
+                   black_parish_kill_rate,
+                   white_parish_kill_rate,
+                   ratio_bw_parish_kill_rate,
+                   highest_kill_rate,
+                   gender_by_parish,
+                   race_by_parish,
+                   age_by_parish,
+                   race_killing_per_year,
+                   gender_killing_per_year,
+                   age_killing_per_year,
+                   ave_age_killed_per_year,
+                   arm_status_by_race,
+                   fleeing_status,
+                   pct_fleeing_status,
+                   violent_crime_distribution,
+                   mental_health,
+                   killings_per_department,
+                   total_killing_per_dep,
+                   black_killing_per_dep,
+                   white_killing_per_dep,
+                   departments_represented,
+                   mapping_department_killings,
+                   map,
+                   type_map,
+                   officers_killing,
+                   charge_status,
+                   disposition_status,
+                   pending_over_time,
+                   facts
+)
+
+# Adding the new sheets to the spreadsheet
+for (i in seq_along(sheets)) {
+  sheet_name <- sheets[i]
+  data_frame <- data_frames[[i]]
+  
+  # Append the data frame to the sheet using the provided URL
+  write_sheet(data_frame, ss = spreadsheet_link, sheet = sheet_name)
+}
+
