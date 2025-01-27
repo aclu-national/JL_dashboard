@@ -42,8 +42,11 @@ cities_louisiana <- places(state = "LA") %>%
 parishes_louisiana <- counties(state = "LA") %>%
   pull(NAME)
 
+# Defining the most data's date
+data_date <- "2025-01-27"
+
 # Importing data 
-df <- read_csv(here::here("data/intake_data/2025-01-27/louisiana_police_misconduct_data_collection_01_27_25.csv")) %>%
+df <- read_csv(here::here(paste0("data/intake_data/", data_date, "/louisiana_police_misconduct_data_collection.csv"))) %>%
   clean_names()
 
 # Renaming variables
@@ -529,25 +532,3 @@ for (i in seq_along(sheets)) {
   
   write_sheet(data_frame, ss = spreadsheet_link, sheet = sheet_name)
 }
-
-
-df_clean %>%
-  mutate(people = paste0(race_clean, " ", gender_clean, " ", disability_clean)) %>%
-  tabyl(people) %>%
-  arrange(-n)
-
-
-df_clean %>%
-  group_by(`Wrongful Arrest`) %>%
-  summarize(n = n())
-  
-  
-df_clean %>%
-  filter(Race == "X"|
-         Gender == "X"|
-         Disability == "X"|
-         Sexuality == "X")
-  
-
-df_clean %>%
-  filter(Race == "X")
