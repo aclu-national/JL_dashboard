@@ -7,6 +7,7 @@ library(stringdist)
 library(tigris)
 library(gsheet)
 library(googlesheets4)
+library(zipcodeR)
 
 rename_column_n_to_count <- function(data_frames) {
   result <- lapply(data_frames, function(df) {
@@ -42,25 +43,45 @@ cities_louisiana <- places(state = "LA") %>%
 parishes_louisiana <- counties(state = "LA") %>%
   pull(NAME)
 
-# Defining the most data's date
-data_date <- "2025-01-27"
 
 # Importing data 
-df <- read_csv(here::here(paste0("data/intake_data/", data_date, "/louisiana_police_misconduct_data_collection.csv"))) %>%
-  clean_names()
+df <- read.csv("data/intake_data/03-06-2025/louisiana_police_misconduct_data_collection.csv", skip = 2, fileEncoding="UTF-16LE", na.strings=c("","NA")) %>%
+  clean_names() %>%
+  filter(grepl("^\\d{8}$", sid)) %>%
+  filter(!(sid %in% 
+             c("87360301",
+               "89583007",
+               "89673355",
+               "88069441", 
+               "89658949", 
+               "89670766", 
+               "89660077", 
+               "89673985", 
+               "89736235", 
+               "87360301", 
+               "91986436",
+               "89358424", 
+               "89659090",
+               "89659084", 
+               "89658982",
+               "89659039", 
+               "89736235", 
+               "89057746", 
+               "89659186"))) %>%
+  filter(last_name != "Appelson") %>%
+  filter(!(first_name == last_name))
 
 # Renaming variables
 names(df) <- substr(names(df), 1, 20)
 
-df_n <- df %>%
-  filter(last_name != "Appelson") %>%
-  filter(!(first_name == last_name))
 
 # Cleaning our dataframe
 df_clean <- df %>%
+  mutate_all(~ iconv(., to = "UTF-8", sub = "")) %>%
   
   # Filtering to only authorized responses
-  filter(i_authorize_the_aclu == "X") %>%
+  filter(x_i_authorize_the_ac == "X") %>%
+  
   mutate(
     
     # Turning incidents into their categories
@@ -76,6 +97,7 @@ df_clean <- df %>%
       location_of_incident == 9 ~ "Traffic",
       location_of_incident == 10 ~ "Jail",
       location_of_incident == 11 ~ "Prison",
+      location_of_incident == "" ~ "Unknown Location",
       TRUE ~ location_of_incident
     ),
     
@@ -93,55 +115,59 @@ df_clean <- df %>%
     incident_date = as.Date(date_of_incident, "%m/%d/%y")
   ) %>%
   
-  # Removing fake submissions
-  filter(last_name != "Appelson") %>%
-  filter(!(first_name == last_name)) %>%
-  
   # Selecting / Renaming variables
-  select(submit_date = date, 
-         first_name,
-         last_name,
-         incident_date,
-         parish = cleaned_parish,
-         city = cleaned_city,
-         location = location_of_incident,
-         location_other = other_23,
-         police = police_department_s_,
-         victim = this_incident_happen,
-         victim_other = other_26,
-         "Wrongful Stop" = wrongfully_stopped,
-         "Wrongful Search" = wrongfully_searched,
-         "Wrongful Arrest" = wrongfully_arrested,
-         "Excessive Use of Force" = wrongfully_subjected,
-         "Wrongful Aquisition of Property" = property_wrongfully_,
-         "Police Killing" = a_loved_one_was_kill,
-         "Other Misconduct" = other_34,
-         charges = is_the_victim_of_thi,
-         charges_other = other_36,
-         narrative = in_my_words_this_is_,
-         dob = the_victims_date_of_,
-         race = the_victim_identifie,
-         perceived_race = the_victim_is_usuall,
-         gender = the_victims_gender_i,
-         disability = the_victim_has_a_phy,
-         "Race" = race,
-         "Gender" = gender,
-         "Sexuality" = sexuality,
-         "Disability" = disability_or_mental,
-         "None" = none,
-         "Other targeting" = other_48,
-         targeted_other_desc = other_49,
-         impact = the_incident_s_negat
+  select(
+    sid,
+    submit_date = date, 
+    #parish_of_incident,
+    email,
+    zip,
+    phone,
+    first_name,
+    last_name,
+    city_of_incident,
+    incident_date,
+    zip,
+    parish = cleaned_parish,
+    city = cleaned_city,
+    location = location_of_incident,
+    location_other = other,
+    police = police_department_s_,
+    victim = this_incident_happen,
+    victim_other = other_1,
+    "Wrongful Stop" = wrongfully_stopped,
+    "Wrongful Search" = wrongfully_searched,
+    "Wrongful Arrest" = wrongfully_arrested,
+    "Excessive Use of Force" = wrongfully_subjected,
+    "Wrongful Aquisition of Property" = property_wrongfully_,
+    "Police Killing" = a_loved_one_was_kill,
+    "Other Misconduct" = other_2,
+    charges = is_the_victim_of_thi,
+    charges_other = other_3,
+    narrative = in_my_words_this_is_,
+    dob = the_victim_s_date_of,
+    race = the_victim_identifie,
+    perceived_race = the_victim_is_usuall,
+    gender = the_victim_s_gender_,
+    disability = the_victim_has_a_phy,
+    "Race" = race,
+    "Gender" = gender,
+    "Sexuality" = sexuality,
+    "Disability" = disability_or_mental,
+    "None" = none,
+    "Other targeting" = other_4,
+    targeted_other_desc = other_5,
+    impact = the_incident_s_negat
   ) %>%
   mutate(
     race_clean = case_when(
       str_detect(tolower(race), "mixed|,") ~ "Mixed Race",
-      str_detect(tolower(race),"afric|black|blk|balck") ~ "Black/African American",
+      str_detect(tolower(race),"afric|black") ~ "Black/African American",
       str_detect(tolower(race), "cauc|white|whire") ~ "White",
       str_detect(tolower(race), "asia") ~ "Asian",
-      str_detect(tolower(race), "native|indigenous|somoa") ~ "Native American",
-      is.na(race) ~ "Unknown race",
-      TRUE ~ "Other race"
+      str_detect(tolower(race), "native|indigenous") ~ "Native American",
+      is.na(race) ~ "Unknown Race",
+      TRUE ~ "Other Race"
     ),
     gender_clean = case_when(
       str_detect(tolower(gender), "femal|woman|women") ~ "Female",
@@ -151,52 +177,30 @@ df_clean <- df %>%
       TRUE ~ "Other gender"
     ),
     disability_clean = case_when(
-      disability == "FALSE" ~ "Victim does not have a disability",
-      disability == "TRUE" ~ "Victim has a disability",
-      disability == "Prefer not to answer" ~ "Prefered not to answer",
-      is.na(disability) ~ "Unknown disability"
+      disability == "False" ~ "Victim Does Not Have a Disability",
+      disability == "True" ~ "Victim Has a Disability",
+      disability == "Prefer not to answer" ~ "Prefered Not to Answer",
+      is.na(disability) ~ "Unknown Disability"
     ),
-    parish = replace_na(parish, "Unknown parish"),
-    city = replace_na(city, "Unknown city"),
-    location = replace_na(location, "Unknown location"),
+    parish = replace_na(parish, "Unknown Parish"),
+    city = replace_na(city, "Unknown City"),
+    location = replace_na(location, "Unknown Location"),
     location = str_replace(location, "Other:", "Other location"),
     victim = case_when(
-      victim == "Me" ~ "Self-reported",
-      victim %in% c("A family member", "Someone I know") ~ "Reported on someone's behalf",
-      victim == "Other:" ~ "Other reporting"
+      victim == "Me" ~ "Self-Reported",
+      victim %in% c("A family member", "Someone I know") ~ "Reported on Someone's Behalf",
+      victim == "Other:" ~ "Other Reporting"
     ),
     impact = case_when(
-      impact == "Greatly" ~ "Greatly negatively impacted well-being",
-      impact == "Not at all" ~ "Did not negatively impact well-being",
-      impact == "Prefer not to answer" ~ "Prefers not to answer",
-      impact == "Somewhat" ~ "Somewhat negatively impacted well-being",
-      is.na(impact) ~ "Unknown impact"
+      impact == "Greatly" ~ "Greatly Negatively Impacted Well-Being",
+      impact == "Not at all" ~ "Did Not Negatively Impact Well-Being",
+      impact == "Prefer not to answer" ~ "Prefers Not to Answer",
+      impact == "Somewhat" ~ "Somewhat Negatively Impacted Well-Being",
+      is.na(impact) ~ "Unknown Impact"
     ),
     id = row_number()
   )
 
-df %>%
-  filter(sid %in% 
-           c("87360301",
-             "89583007",
-             "89673355",
-             "88069441", 
-             "89658949", 
-             "89670766", 
-             "89660077", 
-             "89673985", 
-             "89736235", 
-             "87360301", 
-             "91986436",
-             "89358424", 
-             "89659090",
-             "89659084", 
-             "89658982",
-             "89659039", 
-             "89736235", 
-             "89057746", 
-             "89659186")) %>%
-  write_csv("immigration.csv")
 
 # ----------------------- Data Analysis -----------------------------------
 
@@ -299,6 +303,13 @@ target_reason_summary <- df_clean %>%
 # Tabulate counts by impact
 impact_summary <- df_clean %>% 
   tabyl(impact) %>% 
+  print()
+
+# Tabulate counts by race-gender-disability
+df_clean %>%
+  mutate(race_gender_disability = paste0(race_clean, "-", gender_clean,"-", disability_clean)) %>%
+  tabyl(race_gender_disability) %>%
+  arrange(-n) %>% 
   print()
 
 # ----------------------- Bivariate Analysis -----------------------------
@@ -421,12 +432,19 @@ gender_disability <- df_clean %>%
   print()
 
 
-
 ### ------------ Statistics ---------
 
 # Number of submissions
 n_submission <- nrow(df_clean) %>% 
   print()
+
+df_clean %>%
+  filter(Race == "X"|
+           Sexuality == "X"|
+           Gender == "X"|
+           Disability == "X"
+  ) %>%
+  nrow()
 
 # Number of greatly negatively impacted
 n_great_neg_impact <- df_clean %>%
@@ -476,10 +494,6 @@ high_reporting <- df_clean %>%
   paste(., collapse = ", ")
 
 
-
-
-
-
 # ------------------------- Exporting content into a Google Sheet --------------------------------------
 
 # Defining sheets for the spreadsheet
@@ -523,7 +537,6 @@ data_frames = list(sub_per_month,
                    race_disability, 
                    gender_disability)
 
-
 modified_data_frames <- rename_column_n_to_count(data_frames)
 
 for (i in seq_along(sheets)) {
@@ -532,3 +545,22 @@ for (i in seq_along(sheets)) {
   
   write_sheet(data_frame, ss = spreadsheet_link, sheet = sheet_name)
 }
+
+
+df_zip <- df_clean %>%
+  mutate(zip = str_sub(zip, 1, 5),
+         zip = ifelse(nchar(zip) == 5, zip, NA)) %>% 
+  rowwise() %>%  # Apply function row by row
+  mutate(parish = if (!is.na(zip)) reverse_zipcode(zip)$county else NA,
+         state = if (!is.na(zip)) reverse_zipcode(zip)$state else NA,) %>%  
+  select(sid, zip, parish, state, first_name, last_name, phone, email) %>%
+  ungroup()
+
+
+df_zip %>%
+  filter(state == "LA") %>%
+  tabyl(parish) %>%
+  arrange(-n) %>%
+  select(-percent) %>%
+  mutate(parish = str_remove(parish, " Parish")) %>%
+  clipr::write_clip()
