@@ -10,11 +10,11 @@ library(clipr)
 library(googlesheets4)
 
 # Date of updated data
-newest_date = "2024-09-05"
+newest_date = "2025-05-07"
 
 # Defining Links
 killing_data_link <- paste0("data/killing_data/",newest_date,"/Mapping Police Violence.csv")
-agency_locations_link <- "data/misconduct_data/data_agency-reference-list.csv"
+agency_locations_link <- "data/misconduct_data/2024-02-27/data_agency-reference-list.csv"
 spreadsheet_link <- "https://docs.google.com/spreadsheets/d/1JqIciETWVy4mOw16ZHNGLFPd53APcGUYUZnFhstkUbs/edit?gid=0#gid=0"
 
 # Reading in data
@@ -34,7 +34,7 @@ la_killing <- killing_data %>%
   clean_names() %>%
   
 # Filtering for Louisiana killings
-  filter(state == "LA") %>%
+  filter(state == "Louisiana") %>%
   
 # Separating Parish from Parish names
   separate_wider_delim(county, delim = " Parish", names = c("parish", "extra"), too_few = "align_start") %>%
@@ -336,7 +336,7 @@ mental_health <- la_killing %>%
     )
   ) %>%
   tabyl(signs_of_mental_illness) %>%
-  select(-percent)
+  select(-c(percent))
 
 n_mental_illness = sum(la_killing$signs_of_mental_illness == "Yes", na.rm = TRUE)
 n_drug = sum(la_killing$signs_of_mental_illness == "Drug or Alcohol Use", na.rm = TRUE)
@@ -533,7 +533,7 @@ pending_over_time <- la_killing %>%
   tabyl(year) %>%
   select(-percent)
 
-pending_before_2018 = sum(filter(pending_over_time, year <= 2018)$n)/sum(pending_over_time$n)
+pending_before_2019 = sum(filter(pending_over_time, year <= 2019)$n)/sum(pending_over_time$n)
 
 
 # --------------------- Pushing the data to a spreadsheet ------------------
@@ -555,7 +555,7 @@ facts <- data.frame(
     "Mental Illness",
     "Drug",
     "Officers Named",
-    "Pending before 2018"
+    "Pending before 2019"
   ),
   
   
@@ -575,7 +575,7 @@ facts <- data.frame(
     n_mental_illness,
     n_drug,
     officer_name,
-    pending_before_2018
+    pending_before_2019
   )
 
 )
@@ -661,6 +661,7 @@ data_frames = list(
                    pending_over_time,
                    facts
 )
+
 
 # Adding the new sheets to the spreadsheet
 for (i in seq_along(sheets)) {
