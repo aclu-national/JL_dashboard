@@ -33,6 +33,10 @@ rename_column_n_to_count <- function(data_frames) {
 
 # Loading spreadsheet
 spreadsheet_link <- "https://docs.google.com/spreadsheets/d/1jfkRvr2wW3NXbLCe9FLXVX0TKZIgwXmI1r-d8aQ59Eo/edit?gid=0#gid=0"
+spreadsheet_link2 <- "https://docs.google.com/spreadsheets/d/1kTcgR1G7eqfQNzEK9slOavkEUrukPaDN-qt2U55nhAo/edit?gid=0#gid=0"
+
+
+
 gs4_auth(email = "eappelson@laaclu.org")
 
 # Loading in city names 
@@ -40,12 +44,25 @@ cities_louisiana <- places(state = "LA") %>%
   pull(NAME)
 
 # Loading county names
-parishes_louisiana <- counties(state = "LA") %>%
-  pull(NAME)
+parishes_louisiana <- c("Acadia", "Allen", "Ascension", "Assumption", "Avoyelles", 
+                                    "Beauregard", "Bienville", "Bossier", "Caddo", "Calcasieu", 
+                                    "Caldwell", "Cameron", "Catahoula", "Claiborne", "Concordia", 
+                                    "De Soto", "East Baton Rouge", "East Carroll", "East Feliciana", 
+                                    "Evangeline", "Franklin", "Grant", "Iberia", "Iberville", 
+                                    "Jackson", "Jefferson", "Jefferson Davis", "Lafayette", 
+                                    "Lafourche", "Lasalle", "Lincoln", "Livingston", "Madison", 
+                                    "Morehouse", "Natchitoches", "Orleans", "Ouachita", 
+                                    "Plaquemines", "Pointe Coupee", "Rapides", "Red River", 
+                                    "Richland", "Sabine", "St. Bernard", "St. Charles", 
+                                    "St. Helena", "St. James", "St. John The Baptist", "St. Landry", 
+                                    "St. Martin", "St. Mary", "St. Tammany", "Tangipahoa", 
+                                    "Tensas", "Terrebonne", "Union", "Vermilion", "Vernon", 
+                                    "Washington", "Webster", "West Baton Rouge", "West Carroll", 
+                                    "West Feliciana", "Winn")
 
 
 # Importing data 
-df <- read.csv("data/intake_data/03-06-2025/louisiana_police_misconduct_data_collection.csv", skip = 2, fileEncoding="UTF-16LE", na.strings=c("","NA")) %>%
+df <- read.csv("data/intake_data/2025-05-07/louisiana_police_misconduct_data_collection.csv", skip = 2, fileEncoding="UTF-16LE", na.strings=c("","NA")) %>%
   clean_names() %>%
   filter(grepl("^\\d{8}$", sid)) %>%
   filter(!(sid %in% 
@@ -211,10 +228,22 @@ sub_per_month <- df_clean %>%
   print()
 
 # Tabulate counts by parish
-parish_summary <- df_clean %>% 
-  tabyl(parish) %>% 
-  arrange(-n) %>% 
-  print()
+parish_summary <- df_clean %>%
+  mutate(zip = str_sub(zip, 1, 5),
+         zip = ifelse(nchar(zip) == 5, zip, NA)) %>% 
+  rowwise() %>% 
+  mutate(parish = if (!is.na(zip)) reverse_zipcode(zip)$county else NA,
+         state = if (!is.na(zip)) reverse_zipcode(zip)$state else NA) %>%  
+  ungroup() %>%
+  filter(state == "LA") %>%
+  tabyl(parish) %>%
+  mutate(parish = str_replace(parish, " Parish",""),
+         report = "Had at Least One Reported Misconduct Incident") %>%
+  arrange(-n) %>%
+  select(-percent)
+
+names(parish_summary) <- NULL
+
 
 # Tabulate counts by city
 city_summary <- df_clean %>% 
@@ -303,6 +332,7 @@ target_reason_summary <- df_clean %>%
 # Tabulate counts by impact
 impact_summary <- df_clean %>% 
   tabyl(impact) %>% 
+  arrange(-n) %>%
   print()
 
 # Tabulate counts by race-gender-disability
@@ -435,63 +465,102 @@ gender_disability <- df_clean %>%
 ### ------------ Statistics ---------
 
 # Number of submissions
-n_submission <- nrow(df_clean) %>% 
+n_submission_total <- nrow(df) %>% 
   print()
 
-df_clean %>%
-  filter(Race == "X"|
-           Sexuality == "X"|
-           Gender == "X"|
-           Disability == "X"
+n_submission_better <- nrow(df_clean) %>% 
+  print()
+
+# Number of people targeted because of race
+n_race <- df_clean %>%
+  filter(Race == "X"
   ) %>%
   nrow()
 
 # Number of greatly negatively impacted
-n_great_neg_impact <- df_clean %>%
-  filter(impact == "Greatly negatively impacted well-being") %>%
-  nrow() %>% 
-  print()
+pct_great_neg_impact <- paste0(round(100*sum(df_clean$impact == "Greatly Negatively Impacted Well-Being", na.rm = TRUE)/n_submission_better,2), "%")
+  
+pct_neg_impact <- paste0(round(100*sum(df_clean$impact %in% c("Greatly Negatively Impacted Well-Being",
+                                                              "Somewhat Negatively Impacted Well-Being"), na.rm = TRUE)/n_submission_better,2),"%")
+
 
 # Number of parishes
-n_parish <- df_clean %>%
-  tabyl(parish) %>%
-  filter(!(parish %in% c("Unknown parish", "Other parish"))) %>%
-  nrow() %>% 
-  print()
+n_parish <- parish_summary %>%
+  nrow()
 
-# Number of excessive force and police killings
-n_violent <- (sum(df_clean$`Police Killing` == "X", na.rm = TRUE) + 
-                sum(df_clean$`Excessive Use of Force` == "X", na.rm = TRUE)) %>% 
-  print()
 
-# Percent non-white 
-perc_non_white <- df_clean %>%
-  filter(race_clean != "Unknown race") %>%
-  tabyl(race_clean) %>%
-  mutate(percent = n / sum(n)) %>%
-  filter(race_clean != "White") %>%
-  summarise(percent_non_white = sum(percent)) %>%
-  pull(percent_non_white) %>% 
-  print()
+pct_wrongful <- paste0(round(100*sum(df_clean$`Wrongful Arrest` == "X", na.rm = TRUE)/n_submission_better,2),"%")
 
-# Percent disability
-percent_disbility <- df_clean %>%
-  filter(disability_clean != "Unknown disability") %>%
-  tabyl(disability_clean) %>%
-  mutate(percent = n / sum(n)) %>%
-  filter(disability_clean == "Victim has a disability") %>%
-  summarise(percent_dis = sum(percent)) %>%
-  pull(percent_dis) %>% 
-  print()
+pct_excessive <- paste0(round(100*sum(df_clean$`Excessive Use of Force` == "X", na.rm = TRUE)/n_submission_better,2),"%")
+
+
+pct_private <- paste0(round(100*sum(df_clean$location %in% c("Private Residence", 
+                                                                            "School or University",
+                                                                            "Place of Worship",
+                                                                            "Store"), na.rm = TRUE)/n_submission_better,2),"%")
+
+pct_public <- paste0(round(100*sum(df_clean$location %in% c("Public Street", 
+                                                            "Public Transit",
+                                                            "Public Park",
+                                                            "Traffic"), na.rm = TRUE)/n_submission_better,2),"%")
+
+pct_incar <- paste0(round(100*sum(df_clean$location %in% c("Jail", 
+                                                            "Prison"), na.rm = TRUE)/n_submission_better,2),"%")
+
 
 # Highest reporting
 high_reporting <- df_clean %>%
+  mutate(zip = str_sub(zip, 1, 5),
+         zip = ifelse(nchar(zip) == 5, zip, NA)) %>% 
+  rowwise() %>% 
+  mutate(parish = if (!is.na(zip)) reverse_zipcode(zip)$county else NA,
+         state = if (!is.na(zip)) reverse_zipcode(zip)$state else NA) %>%  
+  ungroup() %>%
+  filter(state == "LA") %>%
   tabyl(parish) %>%
+  arrange(-n) %>%
+  select(-percent) %>%
   filter(parish != "Unknown parish") %>%
   arrange(-n) %>%
   head(3) %>%
   pull(parish) %>%
   paste(., collapse = ", ")
+
+
+
+facts <- data.frame(
+  variables = c(
+    "Total Submissions",
+    "Total Cleaned Submissions",
+    "Number of People Targetted for their race",
+    "Percent of People Greatly Negatively Impacted",
+    "Percent of People Negatively Impacted",
+    "Number of Parishes",
+    "Percent Wrongful",
+    "Percent Excessive",
+    "Percent Private",
+    "Percent Public",
+    "Percent Jails or Prisons",
+    "High Reporting Parishes"
+  ),
+  
+  
+  values = c(
+    n_submission_total,
+    n_submission_better,
+    n_race,
+    pct_great_neg_impact,
+    pct_neg_impact,
+    n_parish,
+    pct_wrongful,
+    pct_excessive,
+    pct_private,
+    pct_public,
+    pct_incar,
+    high_reporting
+  )
+  
+)
 
 
 # ------------------------- Exporting content into a Google Sheet --------------------------------------
@@ -504,7 +573,7 @@ sheets = c("Report per Month", "Report per Parish", "Report per City", "Report p
            "Report per Impact", "Race by Location", "Gender by Location", "Disability by Location", 
            "Misconduct by Location", "Target by Location", "Misconduct by Race", "Misconduct by Gender", 
            "Misconduct by Disability", "Target by Race", "Target by Gender", "Target by Disability", 
-           "Race and Gender", "Race and Disability", "Gender and Disability")
+           "Race and Gender", "Race and Disability", "Gender and Disability", "Facts")
 
 
 # Defining sheet values
@@ -535,9 +604,11 @@ data_frames = list(sub_per_month,
                    target_disability, 
                    race_gender, 
                    race_disability, 
-                   gender_disability)
+                   gender_disability,
+                   facts)
 
 modified_data_frames <- rename_column_n_to_count(data_frames)
+
 
 for (i in seq_along(sheets)) {
   sheet_name <- sheets[i]
@@ -547,20 +618,51 @@ for (i in seq_along(sheets)) {
 }
 
 
-df_zip <- df_clean %>%
-  mutate(zip = str_sub(zip, 1, 5),
-         zip = ifelse(nchar(zip) == 5, zip, NA)) %>% 
-  rowwise() %>%  # Apply function row by row
-  mutate(parish = if (!is.na(zip)) reverse_zipcode(zip)$county else NA,
-         state = if (!is.na(zip)) reverse_zipcode(zip)$state else NA,) %>%  
-  select(sid, zip, parish, state, first_name, last_name, phone, email) %>%
-  ungroup()
+
+# Defining sheets for the spreadsheet
+sheets2 = c("Report per Month", "Report per City", "Report per Location",
+           "Report per Submiter", "Report per Misconduct", "Report per Race",
+           "Report per Gender", "Report per Disability", "Report per Target Reason", 
+           "Report per Impact", "Race by Location", "Gender by Location", "Disability by Location", 
+           "Misconduct by Location", "Target by Location", "Misconduct by Race", "Misconduct by Gender", 
+           "Misconduct by Disability", "Target by Race", "Target by Gender", "Target by Disability", 
+           "Race and Gender", "Race and Disability", "Gender and Disability")
 
 
-df_zip %>%
-  filter(state == "LA") %>%
-  tabyl(parish) %>%
-  arrange(-n) %>%
-  select(-percent) %>%
-  mutate(parish = str_remove(parish, " Parish")) %>%
-  clipr::write_clip()
+# Defining sheet values
+data_frames2 = list(sub_per_month, 
+                   city_summary, 
+                   location_type_summary, 
+                   victim_summary, 
+                   violence_type_summary, 
+                   race_cleaned_summary, 
+                   gender_cleaned_summary, 
+                   disability_summary, 
+                   target_reason_summary, 
+                   impact_summary, 
+                   location_race, 
+                   location_gender, 
+                   location_disability, 
+                   location_violence, 
+                   location_target, 
+                   violence_race, 
+                   violence_gender, 
+                   violence_disability, 
+                   target_race, 
+                   target_gender, 
+                   target_disability, 
+                   race_gender, 
+                   race_disability, 
+                   gender_disability)
+
+modified_data_frame2 <- rename_column_n_to_count(data_frames2)
+
+
+
+for (i in seq_along(sheets2)) {
+  sheet_name <- sheets2[i]
+  data_frame <- modified_data_frame2[[i]]
+  
+  write_sheet(data_frame, ss = spreadsheet_link2, sheet = sheet_name)
+}
+
