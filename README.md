@@ -124,6 +124,3 @@ The process of cleaning the misconduct data includes ([see the code and analysis
 
 ## Visualization
 The vizualizations for this project were primarily creating using [Infogram](https://infogram.com/). The only other visualization used were created through R Shiny and the code is provided in the above. 
-
-## Product
-The dashboard can be found here: https://www.aclujusticelab.org/dashboard/ 
