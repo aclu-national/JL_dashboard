@@ -16,12 +16,10 @@ We are committed to holding the police accountable for their actions. This invol
 ## Git Structure
 
 ```
-JL_dashboard_shiny
-├── app.R
-└── rsconnect
-    └── shinyapps.io
-        └── laaclu
-            └── JL_dashboard_shiny.dcf
+├── JL_dashboard_shiny
+│   ├── app.R
+│   ├── rsconnect
+
 ├── README.md
 ├── VPVL.Rproj
 
@@ -46,12 +44,6 @@ JL_dashboard_shiny
 │       └── 35158-0001-Data.rda
 
 ├── image
-│   ├── basic_git_structure.png
-│   ├── gif2.gif
-│   ├── gif3.gif
-│   ├── git_structure
-│   ├── image.png
-│   └── visual.png
 
 ├── reference_data
 │   ├── data_years.csv
