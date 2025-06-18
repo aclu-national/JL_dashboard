@@ -15,7 +15,70 @@ We are committed to holding the police accountable for their actions. This invol
 
 ## Git Structure
 
-<img src = https://github.com/aclu-national/JL_dashboard_test2/blob/fdcea16566ab7e170e9151b82c4c53019b1bad4d/image/git_structure >
+```
+JL_dashboard_shiny
+├── app.R
+└── rsconnect
+    └── shinyapps.io
+        └── laaclu
+            └── JL_dashboard_shiny.dcf
+├── README.md
+├── VPVL.Rproj
+
+├── data
+│   ├── README.md
+│   ├── intake_data
+│   │   └── 2025-01-27
+│   │       └── louisiana_police_misconduct_data_collection.csv
+│   ├── misconduct_data
+│   │   └── 2024-02-27
+│   │       ├── data_agency-reference-list.csv
+│   │       ├── data_allegation.csv
+│   │       ├── data_event.csv
+│   │       ├── data_personnel.csv
+│   │       └── data_post-officer-history.csv
+│   └── overview_data
+│       ├── 2024-02-27
+│       │   └── pe_1960_2022.csv
+│       ├── 2025-01-27
+│       │   └── lee_1960_2023.csv
+│       ├── 35158-0001-Codebook.pdf
+│       └── 35158-0001-Data.rda
+
+├── image
+│   ├── basic_git_structure.png
+│   ├── gif2.gif
+│   ├── gif3.gif
+│   ├── git_structure
+│   ├── image.png
+│   └── visual.png
+
+├── reference_data
+│   ├── data_years.csv
+│   ├── key_words.csv
+│   ├── misconduct_agency_representation.csv
+│   └── represented.csv
+
+└── scripts
+    ├── intake_scripts
+    │   └── intake_data_cleaning.R
+    ├── killing_scripts
+    │   └── killing_data_cleaning.R
+    ├── misconduct_scripts
+    │   ├── allegation_classification
+    │   │   ├── GSDMM.py
+    │   │   ├── classification_methodology.pdf
+    │   │   ├── data_and_predictions
+    │   │   │   ├── labelled_data.csv
+    │   │   │   ├── rf_predictions.csv
+    │   │   │   ├── svm_predictions.csv
+    │   │   │   └── test_for_predictions.csv
+    │   │   ├── fitting_allegation_models.R
+    │   │   └── multilabel.py
+    │   └── misconduct_data_cleaning.R
+    └── overview_scripts
+        └── overview_data_cleaning.R
+```
 
 ## Sources
 Data on known killings by police were obtained by [Mapping Police Violence](http://mappingpoliceviolence.org/) and include crowd-sourced data on killings by police officers that have been reported by the media beginning in 2013. The Mapping Police Violence data are [sourced](https://mappingpoliceviolence.org/methodology) from the Google News and validated using [Fatal Encounters](https://fatalencounters.org/), [Fatal Force](https://www.washingtonpost.com/graphics/investigations/police-shootings-database/), and governmental data sources. More information on these data can be found at [mappingpoliceviolence.org](http://mappingpoliceviolence.org). Data used for this report was downloaded from Mapping Police Violence on January 27th, 2025.
