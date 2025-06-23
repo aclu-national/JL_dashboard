@@ -1,5 +1,164 @@
 Conducting text analysis we get the following: 
 
+
+| Category         | Keyword          |   Count |
+|:-----------------|:-----------------|--------:|
+| Emotional Impact | fear             |      25 |
+| Emotional Impact | stress           |      16 |
+| Emotional Impact | trauma           |      16 |
+| Emotional Impact | scream           |      13 |
+| Emotional Impact | mental health    |      13 |
+| Emotional Impact | cry              |      12 |
+| Emotional Impact | anxiety          |      10 |
+| Emotional Impact | PTSD             |      10 |
+| Emotional Impact | distress         |       8 |
+| Emotional Impact | shock            |       6 |
+| Emotional Impact | panic            |       6 |
+| Emotional Impact | vulnerable       |       4 |
+| Emotional Impact | nightmare        |       4 |
+| Emotional Impact | depression       |       4 |
+| Emotional Impact | fearful          |       3 |
+| Emotional Impact | terrified        |       3 |
+| Emotional Impact | anguish          |       1 |
+| Emotional Impact | helpless         |       1 |
+| Emotional Impact | shaken           |       1 |
+| Immigration      | detention        |      14 |
+| Immigration      | detainee         |       4 |
+| Immigration      | immigration      |       3 |
+| Immigration      | deportation      |       2 |
+| Immigration      | asylum           |       1 |
+| Immigration      | refugee          |       1 |
+| Location         | court            |      64 |
+| Location         | jail             |      63 |
+| Location         | home             |      60 |
+| Location         | house            |      48 |
+| Location         | public           |      47 |
+| Location         | prison           |      36 |
+| Location         | road             |      32 |
+| Location         | traffic          |      28 |
+| Location         | street           |      27 |
+| Location         | school           |      22 |
+| Location         | block            |      19 |
+| Location         | park             |      18 |
+| Location         | community        |      18 |
+| Location         | mall             |      17 |
+| Location         | station          |      16 |
+| Location         | store            |      16 |
+| Location         | march            |      16 |
+| Location         | rally            |      12 |
+| Location         | scene            |       9 |
+| Location         | detention center |       9 |
+| Location         | church           |       8 |
+| Location         | residence        |       8 |
+| Location         | apartment        |       8 |
+| Location         | university       |       6 |
+| Location         | intersection     |       6 |
+| Location         | parking lot      |       6 |
+| Location         | neighborhood     |       5 |
+| Location         | gas station      |       4 |
+| Location         | highway          |       4 |
+| Location         | sidewalk         |       3 |
+| Location         | protest          |       1 |
+| Officer Involved | police           |     117 |
+| Officer Involved | officer          |     115 |
+| Officer Involved | sheriff          |      44 |
+| Officer Involved | cop              |      30 |
+| Officer Involved | deputy           |      16 |
+| Officer Involved | detective        |      11 |
+| Officer Involved | agent            |      10 |
+| Officer Involved | marshal          |       7 |
+| Officer Involved | constable        |       2 |
+| Officer Involved | trooper          |       1 |
+| Other            | charges          |      48 |
+| Other            | civil rights     |      29 |
+| Other            | investigation    |      28 |
+| Other            | complaint        |      27 |
+| Other            | trial            |      18 |
+| Other            | lawsuit          |      17 |
+| Other            | footage          |      15 |
+| Other            | body camera      |      13 |
+| Other            | retaliation      |      12 |
+| Other            | accountability   |      11 |
+| Other            | racial           |      11 |
+| Other            | rights violation |      11 |
+| Other            | violence         |      10 |
+| Other            | misconduct       |       9 |
+| Other            | prosecute        |       8 |
+| Other            | discrimination   |       8 |
+| Other            | convicted        |       7 |
+| Other            | surveillance     |       6 |
+| Other            | policy           |       5 |
+| Other            | profiling        |       4 |
+| Other            | injustice        |       3 |
+| Other            | racism           |       3 |
+| Other            | racist           |       3 |
+| Other            | unarmed          |       3 |
+| Other            | reform           |       2 |
+| Other            | bias             |       2 |
+| Other            | cover up         |       2 |
+| Other            | immunity         |       1 |
+| Other            | indictment       |       1 |
+| Outcomes         | emergency room   |     279 |
+| Outcomes         | dead             |      36 |
+| Outcomes         | kill             |      30 |
+| Outcomes         | injury           |      26 |
+| Outcomes         | ICU              |      21 |
+| Outcomes         | hospital         |      20 |
+| Outcomes         | death            |      16 |
+| Outcomes         | critical         |       7 |
+| Outcomes         | disable          |       6 |
+| Outcomes         | bruise           |       4 |
+| Outcomes         | wound            |       3 |
+| Outcomes         | hospitalize      |       2 |
+| Outcomes         | autopsy          |       2 |
+| Outcomes         | bleed            |       2 |
+| Outcomes         | unconscious      |       2 |
+| Outcomes         | paralyze         |       1 |
+| Outcomes         | fracture         |       1 |
+| Outcomes         | disfigure        |       1 |
+| Outcomes         | coma             |       1 |
+| Police Actions   | arrest           |      96 |
+| Police Actions   | force            |      54 |
+| Police Actions   | search           |      50 |
+| Police Actions   | hit              |      47 |
+| Police Actions   | handcuff         |      35 |
+| Police Actions   | abuse            |      34 |
+| Police Actions   | harass           |      30 |
+| Police Actions   | gun              |      29 |
+| Police Actions   | detain           |      27 |
+| Police Actions   | shoot            |      23 |
+| Police Actions   | throw            |      20 |
+| Police Actions   | assault          |      17 |
+| Police Actions   | beat             |      16 |
+| Police Actions   | chase            |      15 |
+| Police Actions   | baton            |      12 |
+| Police Actions   | slam             |      12 |
+| Police Actions   | grab             |      11 |
+| Police Actions   | rape             |      11 |
+| Police Actions   | push             |      10 |
+| Police Actions   | restrain         |       9 |
+| Police Actions   | firearm          |       9 |
+| Police Actions   | punch            |       8 |
+| Police Actions   | raid             |       8 |
+| Police Actions   | drag             |       7 |
+| Police Actions   | kick             |       6 |
+| Police Actions   | apprehend        |       4 |
+| Police Actions   | shove            |       3 |
+| Police Actions   | club             |       3 |
+| Police Actions   | struck           |       3 |
+| Police Actions   | spray            |       3 |
+| Police Actions   | mace             |       2 |
+| Police Actions   | strike           |       2 |
+| Police Actions   | taser            |       2 |
+| Police Actions   | pepper spray     |       2 |
+| Police Actions   | choke            |       2 |
+| Police Actions   | sexual assault   |       1 |
+| Police Actions   | tackle           |       1 |
+| Police Actions   | wrestle          |       1 |
+| Police Actions   | slap             |       1 |
+| Police Actions   | deploy           |       1 |
+
+
 | Word    |   Count |
 |:--------|--------:|
 | offic   |     543 |
