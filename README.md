@@ -1,3 +1,4 @@
+# Visualizing Police Violence in Louisiana 
 ![](https://github.com/aclu-national/JL_dashboard/blob/750f780d571485c2c932d4ffbceaf4d256ebe400/image/image.png)
 
 ## Mission
